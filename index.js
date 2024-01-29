@@ -30,20 +30,38 @@ window.onload = () => {
                 const content = document.createElement('div');
                 content.className = "card-content";
                 content.innerText = storyPart.text;
+                if (storyPart.imageUrl) {
+                    setBackgroundImage(storyPart.imageUrl);
+                }
                 dataElement.appendChild(content);
                 // Create buttons for the choices
                 const choicesElement = document.getElementById('choices');
                 if (choicesElement) {
                     choicesElement.innerHTML = ''; // Clear previous choices
                     const buttonWrapper = document.createElement('div');
-                    buttonWrapper.className = "buttons";
+                    buttonWrapper.className = "buttons is-centered"; // Add Bulma class for centering
                     choicesElement.appendChild(buttonWrapper);
                     storyPart.choices.forEach((choice) => {
                         const choiceButton = document.createElement('button');
-                        choiceButton.innerText = choice.text;
+                        if (choice.imageUrl) {
+                            const image = document.createElement('img'); // Create an image element
+                            image.src = choice.imageUrl; // Set the image source
+                            image.alt = choice.text; // Set the alt attribute for accessibility
+                            // Apply CSS styles to the image to make it small
+                            image.style.width = '20px'; // Adjust the width as needed
+                            image.style.height = '20px'; // Adjust the height as needed
+                            choiceButton.appendChild(image); // Append the image to the button
+                        }
+                        choiceButton.innerHTML += choice.text; // Add text to the button
                         choiceButton.className = "button is-link";
                         choiceButton.addEventListener('click', () => {
                             currentStoryPart = choice.next;
+                            if (choice.imageUrl) {
+                                setBackgroundImage(choice.imageUrl);
+                            }
+                            else {
+                                setBackgroundImage('');
+                            }
                             button.click(); // Trigger the next part of the story
                         });
                         buttonWrapper.appendChild(choiceButton);
@@ -62,3 +80,12 @@ window.onload = () => {
         button.click();
     }
 };
+// Define a function to set the background image of the card
+function setBackgroundImage(imageUrl, size = 'cover') {
+    const card = document.getElementById('dataDisplay');
+    if (card) {
+        card.style.backgroundImage = `url(${imageUrl})`;
+        card.style.backgroundSize = size;
+        card.style.backgroundPosition = 'right top';
+    }
+}
