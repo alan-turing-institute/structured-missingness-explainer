@@ -1,0 +1,101 @@
+{
+    "story": {
+      "start": {
+        "text": "You are a patient in a healthcare clinic. Choose your avatar:",
+        "choices": [
+          {
+            "text": "Young man.",
+            "next": "young"
+          },
+          {
+            "text": "Young woman.",
+            "next": "young"
+          },
+          {
+            "text": "Elderly man.",
+            "next": "elderly"
+          },
+          {
+            "text": "Elderly woman.",
+            "next": "elderly"
+          }
+        ]
+      },
+      "young": {
+        "text": "You are presented with some symptoms: abdominal pain, weigh loss, non specific fevers. The doctor asks: Have you had a colonoscopy in the last 5 years?",
+        "choices": [
+          {
+            "text": "Yes.",
+            "next": "young_colonoscopy"
+          },
+          {
+            "text": "No.",
+            "next": "young_no_colonoscopy"
+          }
+        ]
+      },
+      "young_colonoscopy": {
+        "text": "It’s unlikely that you need another one. Colon cancer is very slow-growing and your symptoms are nonspecific at this point.",
+        "choices": [
+          {
+            "text": "Get blood test and CT scans.",
+            "next": "more_tests"
+          }
+        ]
+      },
+       "young_no_colonoscopy": {
+        "text": "Then your doctor will order one to be sure.. \n",
+        "choices": [
+          {
+            "text": "Get blood test and CT scans and colonoscopy.",
+            "next": "more_tests"
+          }
+        ]
+      },
+      "elderly": {
+        "text": "It’s unlikely that you need a colonoscopy because of your age. Colon cancer is very slow-growing and your symptoms are nonspecific at this point.",
+        "choices": [
+          {
+            "text": "Get blood test and CT scans.",
+            "next": "more_tests"
+          }
+        ]
+      },
+       "more_tests": {
+        "text": "Your test results come back and you are diagnosed with gastric cancer. The doctor will assess your best treatment options. Does it run in the family?",
+        "choices": [
+          {
+            "text": "Yes.",
+            "next": "runs_in_family"
+          },
+           {
+            "text": "No.",
+            "next": "no_runs_in_family"
+          }
+        ]
+      },
+        "runs_in_family": {
+            "text": "Since that’s the case, let’s sequence your tumor to see if it is one of the known genes. Some of these mutations can be treated with targeted therapy.",
+            "choices": [
+            {
+                "text": "Lets sequence it!.",
+                "next": "sequence"
+            }
+            ]
+        },
+        "no_runs_in_family": {
+            "text": "Colon cancer doesn’t run in your family, but let’s sequence your tumor to see if there are targeted therapies available.",
+            "choices": [
+            {
+                "text": "Lets sequence it!.",
+                "next": "sequence"
+            }
+            ]
+        },
+      "sequence": {
+        "text": "Your data enters a biobank to collect information and enable the future of cancer research. Is it possible your data will contribute to “structured missingness” in the biobank data?",
+      "choices": [
+        ]
+      }
+    }
+}
