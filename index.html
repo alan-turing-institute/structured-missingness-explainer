@@ -6,15 +6,21 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div class="columns is-centered">
-        <div class="column is-half">
-            <div id="displayText">Hello World!</div>
-            <button id="changeTextButton">Change Text</button>      
-            <button id="restartButton">Restart</button>      
-            <p id="dataDisplay"></p>
-            <div id="choices"></div>
+    <div class="columns is-centered is-vcentered">
+        <div class="column is-one-third">
+            <button id="changeTextButton">Magic button</button>      
+            <div class="card">
+                <p id="dataDisplay"></p>
+                <div id="choices"></div>
+            </div>  
         </div>
     </div>
+
+    <footer class="footer is-fixed-bottom">
+        <div class="content has-text-centered">
+            <button id="restartButton">Restart</button>      
+        </div>
+    </footer>
 
     <!-- Reference to the compiled JavaScript -->
     <script src="index.js"></script>

@@ -21,7 +21,23 @@ window.onload = () => {
                 .then(data => {
                     // Display the current part of the story
                     const storyPart = data.story[currentStoryPart];
-                    dataElement.innerText = storyPart.text;
+
+                    dataElement.innerHTML = ''; // clear previous content 
+
+                    const cardHeader = document.createElement('header');
+                    cardHeader.className = "card-header";
+                    const cardTitle = document.createElement('p');
+                    cardTitle.className = "card-header-title";
+                    cardTitle.innerText = "Title";
+                    cardHeader.appendChild(cardTitle);
+                    dataElement.appendChild(cardHeader);
+
+
+                    const content = document.createElement('div');
+                    content.className = "card-content";
+                    
+                    content.innerText = storyPart.text;
+                    dataElement.appendChild(content);
 
                     // Create buttons for the choices
                     const choicesElement = document.getElementById('choices');
