@@ -1,28 +1,38 @@
 {
     "story": {
       "start": {
-        "text": "You are a patient in a healthcare clinic. Choose your avatar:",
+        "text": "Hi! You are a patient in a healthcare clinic. \n Choose your character:\n",
+        "imageUrl": "img/light_background.jpeg",
+
         "choices": [
           {
             "text": "Young man.",
-            "next": "young"
+            "next": "young",
+            "imageUrl": "img/young_male.jpeg"
           },
           {
             "text": "Young woman.",
-            "next": "young"
+            "next": "young",
+            "imageUrl": "img/young_female.jpeg"
+
           },
           {
             "text": "Elderly man.",
-            "next": "elderly"
+            "next": "elderly",
+            "imageUrl": "img/elderly_man.jpeg"
+
           },
           {
             "text": "Elderly woman.",
-            "next": "elderly"
+            "next": "elderly",
+            "imageUrl": "img/elderly_female.jpeg"
+
           }
         ]
       },
       "young": {
-        "text": "You are presented with some symptoms: abdominal pain, weigh loss, non specific fevers. The doctor asks: Have you had a colonoscopy in the last 5 years?",
+        "text": "You are presented with some symptoms: abdominal pain, weigh loss, non specific fevers. The doctor asks: \n Have you had a colonoscopy in the last 5 years?",
+        "imageUrl": "img/light_background.jpeg",
         "choices": [
           {
             "text": "Yes.",
@@ -36,6 +46,7 @@
       },
       "young_colonoscopy": {
         "text": "It’s unlikely that you need another one. Colon cancer is very slow-growing and your symptoms are nonspecific at this point.",
+        "imageUrl": "img/light_background.jpeg",
         "choices": [
           {
             "text": "Get blood test and CT scans.",
@@ -45,6 +56,7 @@
       },
        "young_no_colonoscopy": {
         "text": "Then your doctor will order one to be sure.. \n",
+         "imageUrl": "img/light_background.jpeg",
         "choices": [
           {
             "text": "Get blood test and CT scans and colonoscopy.",
@@ -54,6 +66,8 @@
       },
       "elderly": {
         "text": "It’s unlikely that you need a colonoscopy because of your age. Colon cancer is very slow-growing and your symptoms are nonspecific at this point.",
+        "imageUrl": "img/light_background.jpeg",
+
         "choices": [
           {
             "text": "Get blood test and CT scans.",
@@ -62,7 +76,7 @@
         ]
       },
        "more_tests": {
-        "text": "Your test results come back and you are diagnosed with gastric cancer. The doctor will assess your best treatment options. Does it run in the family?",
+        "text": "Your test results come back and you are diagnosed with gastric cancer. The doctor will assess your best treatment options. \n Does it run in the family?",
         "choices": [
           {
             "text": "Yes.",
