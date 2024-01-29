@@ -1,0 +1,56 @@
+{
+    "story": {
+      "start": {
+        "text": "You are a doctor in a healthcare clinic. A patient comes in complaining of a headache. What do you do?",
+        "choices": [
+          {
+            "text": "Ask about the patient's medical history.",
+            "next": "medical_history"
+          },
+          {
+            "text": "Recommend immediate medication.",
+            "next": "medication"
+          }
+        ]
+      },
+      "medical_history": {
+        "text": "You ask about the patient's medical history. They mention a history of migraines. Do you?",
+        "choices": [
+          {
+            "text": "Prescribe a standard migraine medication.",
+            "next": "migraine_medication"
+          },
+          {
+            "text": "Schedule a detailed diagnostic test.",
+            "next": "diagnostic_test"
+          }
+        ]
+      },
+      "medication": {
+        "text": "You recommend an over-the-counter pain reliever. The patient leaves but returns a week later with the same symptoms. What's your next step?",
+        "choices": [
+          {
+            "text": "Refer them to a specialist.",
+            "next": "specialist_referral"
+          },
+          {
+            "text": "Schedule a diagnostic test.",
+            "next": "diagnostic_test"
+          }
+        ]
+      },
+      "migraine_medication": {
+        "text": "You prescribe medication for migraines. The patient thanks you and leaves. End of the path.",
+        "choices": []
+      },
+      "diagnostic_test": {
+        "text": "You schedule a diagnostic test to find the underlying cause of the headaches. The test reveals a need for a specialized treatment. End of the path.",
+        "choices": []
+      },
+      "specialist_referral": {
+        "text": "You refer the patient to a neurologist for further examination. End of the path.",
+        "choices": []
+      }
+    }
+}
+  
