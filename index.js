@@ -9,7 +9,7 @@ window.onload = () => {
         button.className = "button is-primary";
         restartButton.className = "button is-danger is-rounded";
         button.addEventListener('click', () => {
-            fetch('data/demo.json')
+            fetch('data/demo_scenarios.json')
                 .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
