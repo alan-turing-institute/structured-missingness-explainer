@@ -1,26 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple TypeScript App</title>
+    <title>Explaining Structured Missingness</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div class="columns is-centered is-vcentered">
-        <div class="column is-one-third">
-            <button id="changeTextButton">Magic button</button>      
-            <div class="card">
-                <p id="dataDisplay"></p>
-                <div id="choices"></div>
-            </div>  
+    <div id="wrapper">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <section class="hero">
+                    <div class="hero-body">
+                        
+                        <p class="title">
+                            <img src="./img/logo1.png"  style="width:5%; height:5%"/>
+                            Structured Missingness: interactive explainer
+                        </p>
+                    </div>
+                  </section>
+            </div>
+        </nav>
+        <div class="columns is-centered is-vcentered">
+            <div class="column is-one-third">
+                <div class="content">
+                    <button id="changeTextButton">Magic button</button>      
+                    <div class="card">
+                        <p id="dataDisplay"></p>
+                        <div id="choices"></div>
+                    </div>  
+                    <div class="content has-text-centered mt-3">
+                        <button id="restartButton">Restart</button>      
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+        </div>
 
     <footer class="footer is-fixed-bottom">
-        <div class="content has-text-centered">
-            <button id="restartButton">Restart</button>      
+        <div class="columns is-centered is-vcentered">
+            <figure>
+                <img class="mr-2" src="./img/turing_logo_black.png" alt="The Alan Turing Institute Logo" width="128"/>
+                <img class="ml-2"src="./img/Roche_Logo_800px_Blue_RGB.png" alt="Roche Logo" width="128"/>
+            </figure>
         </div>
     </footer>
+
 
     <!-- Reference to the compiled JavaScript -->
     <script src="index.js"></script>

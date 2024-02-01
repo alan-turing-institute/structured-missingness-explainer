@@ -8,6 +8,7 @@ window.onload = () => {
         // Add Bulma classes to the button
         button.className = "button is-primary";
         restartButton.className = "button is-danger is-rounded";
+        let stepCounter = 1;
         button.addEventListener('click', () => {
             fetch('data/demo_scenarios.json')
                 .then(response => {
@@ -24,7 +25,7 @@ window.onload = () => {
                 cardHeader.className = "card-header";
                 const cardTitle = document.createElement('p');
                 cardTitle.className = "card-header-title";
-                cardTitle.innerText = "Title";
+                cardTitle.innerText = "Step " + stepCounter;
                 cardHeader.appendChild(cardTitle);
                 dataElement.appendChild(cardHeader);
                 const content = document.createElement('div');
@@ -44,6 +45,7 @@ window.onload = () => {
                         choiceButton.className = "button is-link";
                         choiceButton.addEventListener('click', () => {
                             currentStoryPart = choice.next;
+                            stepCounter++;
                             button.click(); // Trigger the next part of the story
                         });
                         buttonWrapper.appendChild(choiceButton);
@@ -56,6 +58,7 @@ window.onload = () => {
         });
         restartButton.addEventListener('click', () => {
             currentStoryPart = 'start';
+            stepCounter = 1;
             button.click(); // Trigger the start of the story
         });
         // Trigger the start of the story

@@ -4,7 +4,30 @@ html, body {
     flex-direction: column;
     justify-content: center;
 }
+/* Hack for Bulma footer, to stick to bottom of the page */
+#wrapper {
+    flex: 1;
+  }
 
 body {
-    background-color:hsl(0, 0%, 98%);
+    background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('./img/scott-webb-sy0wzqgmf8a-unsplash-bw.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}  
+
+/* Offset the card from the top */
+.content {
+    margin-top: 200px;
+}
+
+/* Hack to make the magic button invisible, fix later */
+#changeTextButton {
+    display: none;
+}
+
+#choices {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
 }

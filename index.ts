@@ -10,6 +10,8 @@ window.onload = () => {
         button.className = "button is-primary"
         restartButton.className = "button is-danger is-rounded";
 
+        let stepCounter = 1;
+
         button.addEventListener('click', () => {
             fetch('data/demo_scenarios.json')
                 .then(response => {
@@ -28,7 +30,9 @@ window.onload = () => {
                     cardHeader.className = "card-header";
                     const cardTitle = document.createElement('p');
                     cardTitle.className = "card-header-title";
-                    cardTitle.innerText = "Title";
+                    cardTitle.innerText = "Step " + stepCounter;
+
+                    
                     cardHeader.appendChild(cardTitle);
                     dataElement.appendChild(cardHeader);
 
@@ -49,11 +53,13 @@ window.onload = () => {
                         choicesElement.appendChild(buttonWrapper);
 
                         storyPart.choices.forEach((choice: { text: string, next: string }) => {
+
                             const choiceButton = document.createElement('button');
                             choiceButton.innerText = choice.text;
                             choiceButton.className = "button is-link";
                             choiceButton.addEventListener('click', () => {
                                 currentStoryPart = choice.next;
+                                stepCounter++;
                                 button.click(); // Trigger the next part of the story
                             });
                             buttonWrapper.appendChild(choiceButton);
@@ -67,6 +73,7 @@ window.onload = () => {
 
         restartButton.addEventListener('click', () => {
             currentStoryPart = 'start';
+            stepCounter = 1;
             button.click(); // Trigger the start of the story
         });
 
