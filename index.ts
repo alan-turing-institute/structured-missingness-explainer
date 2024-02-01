@@ -49,6 +49,7 @@ window.onload = () => {
                         choicesElement.appendChild(buttonWrapper);
 
                         storyPart.choices.forEach((choice: { text: string, next: string }) => {
+
                             const choiceButton = document.createElement('button');
                             choiceButton.innerText = choice.text;
                             choiceButton.className = "button is-link";
