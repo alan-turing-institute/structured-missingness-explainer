@@ -17,6 +17,21 @@ function fetchStory() {
         return yield response.json();
     });
 }
+function createChoicesElement(storyPart, button) {
+    const buttonWrapper = document.createElement('div');
+    buttonWrapper.className = "buttons";
+    storyPart.choices.forEach((choice) => {
+        const choiceButton = document.createElement('button');
+        choiceButton.innerText = choice.text;
+        choiceButton.className = "button is-link";
+        choiceButton.addEventListener('click', () => {
+            currentStoryPart = choice.next;
+            button.click(); // Trigger the next part of the story
+        });
+        buttonWrapper.appendChild(choiceButton);
+    });
+    return buttonWrapper;
+}
 let currentStoryPart = 'start';
 window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     const button = document.getElementById('changeTextButton');
@@ -29,6 +44,8 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
         let stepCounter = 1;
         button.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
             try {
+                // Fetch the story data, currently from a local JSON file
+                // TODO: from a public GitHub repository
                 const data = yield fetchStory();
                 // Display the current part of the story
                 const storyPart = data.story[currentStoryPart];
@@ -44,24 +61,13 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
                 content.className = "card-content";
                 content.innerText = storyPart.text;
                 dataElement.appendChild(content);
+                stepCounter++;
                 // Create buttons for the choices
                 const choicesElement = document.getElementById('choices');
                 if (choicesElement) {
                     choicesElement.innerHTML = ''; // Clear previous choices
-                    const buttonWrapper = document.createElement('div');
-                    buttonWrapper.className = "buttons";
+                    const buttonWrapper = createChoicesElement(storyPart, button);
                     choicesElement.appendChild(buttonWrapper);
-                    storyPart.choices.forEach((choice) => {
-                        const choiceButton = document.createElement('button');
-                        choiceButton.innerText = choice.text;
-                        choiceButton.className = "button is-link";
-                        choiceButton.addEventListener('click', () => {
-                            currentStoryPart = choice.next;
-                            stepCounter++;
-                            button.click(); // Trigger the next part of the story
-                        });
-                        buttonWrapper.appendChild(choiceButton);
-                    });
                 }
             }
             catch (error) {
