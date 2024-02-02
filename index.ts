@@ -1,6 +1,33 @@
+interface IChoice {
+    text: string;
+    next: string;
+}
+
+interface IStoryPart {
+    text: string;
+    choices: IChoice[];
+}
+
+interface IStory {
+    [key: string]: IStoryPart;
+}
+
+interface IStoryData {
+    story: IStory;
+    // Include other properties of the JSON document as needed
+}
+
+async function fetchStory(): Promise<IStoryData> {
+    const response = await fetch('data/demo_scenarios.json');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return await response.json();
+}
+
 let currentStoryPart = 'start';
 
-window.onload = () => {
+window.onload = async () => {
     const button = document.getElementById('changeTextButton');
     const dataElement = document.getElementById('dataDisplay');
     const restartButton = document.getElementById('restartButton');
@@ -12,64 +39,58 @@ window.onload = () => {
 
         let stepCounter = 1;
 
-        button.addEventListener('click', () => {
-            fetch('data/demo_scenarios.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Display the current part of the story
-                    const storyPart = data.story[currentStoryPart];
+        button.addEventListener('click', async () => {
+            try {
+                const data = await fetchStory();
 
-                    dataElement.innerHTML = ''; // clear previous content 
+                // Display the current part of the story
+                const storyPart: IStoryPart = data.story[currentStoryPart];
 
-                    const cardHeader = document.createElement('header');
-                    cardHeader.className = "card-header";
-                    const cardTitle = document.createElement('p');
-                    cardTitle.className = "card-header-title";
-                    cardTitle.innerText = "Step " + stepCounter;
+                dataElement.innerHTML = ''; // clear previous content 
 
-                    
-                    cardHeader.appendChild(cardTitle);
-                    dataElement.appendChild(cardHeader);
+                const cardHeader = document.createElement('header');
+                cardHeader.className = "card-header";
+                const cardTitle = document.createElement('p');
+                cardTitle.className = "card-header-title";
+                cardTitle.innerText = "Step " + stepCounter;
+
+                
+                cardHeader.appendChild(cardTitle);
+                dataElement.appendChild(cardHeader);
 
 
-                    const content = document.createElement('div');
-                    content.className = "card-content";
-                    
-                    content.innerText = storyPart.text;
-                    dataElement.appendChild(content);
+                const content = document.createElement('div');
+                content.className = "card-content";
+                
+                content.innerText = storyPart.text;
+                dataElement.appendChild(content);
 
-                    // Create buttons for the choices
-                    const choicesElement = document.getElementById('choices');
-                    if (choicesElement) {
-                        choicesElement.innerHTML = ''; // Clear previous choices
+                // Create buttons for the choices
+                const choicesElement = document.getElementById('choices');
+                if (choicesElement) {
+                    choicesElement.innerHTML = ''; // Clear previous choices
 
-                        const buttonWrapper = document.createElement('div');
-                        buttonWrapper.className = "buttons";
-                        choicesElement.appendChild(buttonWrapper);
+                    const buttonWrapper = document.createElement('div');
+                    buttonWrapper.className = "buttons";
+                    choicesElement.appendChild(buttonWrapper);
 
-                        storyPart.choices.forEach((choice: { text: string, next: string }) => {
+                    storyPart.choices.forEach((choice: { text: string, next: string }) => {
 
-                            const choiceButton = document.createElement('button');
-                            choiceButton.innerText = choice.text;
-                            choiceButton.className = "button is-link";
-                            choiceButton.addEventListener('click', () => {
-                                currentStoryPart = choice.next;
-                                stepCounter++;
-                                button.click(); // Trigger the next part of the story
-                            });
-                            buttonWrapper.appendChild(choiceButton);
+                        const choiceButton = document.createElement('button');
+                        choiceButton.innerText = choice.text;
+                        choiceButton.className = "button is-link";
+                        choiceButton.addEventListener('click', () => {
+                            currentStoryPart = choice.next;
+                            stepCounter++;
+                            button.click(); // Trigger the next part of the story
                         });
-                    }
-                })
-                .catch(error => {
-                    console.error('An error occurred while attempting to fetch the JSON file:', error);
-                });
-            });
+                        buttonWrapper.appendChild(choiceButton);
+                    });
+                }
+            } catch (error) {
+                console.error('An error occurred while attempting to fetch the JSON file:', error);
+            }
+    });
 
         restartButton.addEventListener('click', () => {
             currentStoryPart = 'start';
