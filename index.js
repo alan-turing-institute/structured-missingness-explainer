@@ -17,6 +17,24 @@ function fetchStory() {
         return yield response.json();
     });
 }
+// Overall card element for the story part
+function createCardElement(storyPart, stepCounter) {
+    const card = document.createElement('div');
+    //    card.className = "card";
+    const cardHeader = document.createElement('header');
+    cardHeader.className = "card-header";
+    const cardTitle = document.createElement('p');
+    cardTitle.className = "card-header-title";
+    cardTitle.innerText = "Step " + stepCounter;
+    cardHeader.appendChild(cardTitle);
+    const content = document.createElement('div');
+    content.className = "card-content";
+    content.innerText = storyPart.text;
+    card.appendChild(cardHeader);
+    card.appendChild(content);
+    return card;
+}
+// Next step choice buttons
 function createChoicesElement(storyPart, button) {
     const buttonWrapper = document.createElement('div');
     buttonWrapper.className = "buttons";
@@ -50,17 +68,8 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
                 // Display the current part of the story
                 const storyPart = data.story[currentStoryPart];
                 dataElement.innerHTML = ''; // clear previous content 
-                const cardHeader = document.createElement('header');
-                cardHeader.className = "card-header";
-                const cardTitle = document.createElement('p');
-                cardTitle.className = "card-header-title";
-                cardTitle.innerText = "Step " + stepCounter;
-                cardHeader.appendChild(cardTitle);
-                dataElement.appendChild(cardHeader);
-                const content = document.createElement('div');
-                content.className = "card-content";
-                content.innerText = storyPart.text;
-                dataElement.appendChild(content);
+                const card = createCardElement(storyPart, stepCounter);
+                dataElement.appendChild(card);
                 stepCounter++;
                 // Create buttons for the choices
                 const choicesElement = document.getElementById('choices');
