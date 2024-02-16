@@ -37,7 +37,7 @@ function createCardElement(storyPart, stepCounter) {
 // Next step choice buttons
 function createChoicesElement(storyPart, button) {
     const buttonWrapper = document.createElement('div');
-    buttonWrapper.className = "buttons";
+    buttonWrapper.className = "buttons is-centered";
     storyPart.choices.forEach((choice) => {
         const choiceButton = document.createElement('button');
         choiceButton.innerText = choice.text;
