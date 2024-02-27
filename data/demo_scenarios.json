@@ -4,15 +4,15 @@
       "text": "Select an avatar to begin your journey:",
       "choices": [
         {
-          "text": "Man.",
+          "text": "Man",
           "next": "symptoms"
         },
         {
-          "text": "Woman.",
+          "text": "Woman",
           "next": "symptoms"
         },
         {
-          "text": "Other.",
+          "text": "Other",
           "next": "symptoms"
         }
       ]
@@ -21,7 +21,7 @@
       "text": "You have been feeling unwell recently, but have been unable to pinpoint your symptoms. You have been nursing a mild headache with some dizziness and fatigue.\n\n It's time to visit the clinic to understand what's going on. Click \"Next\" to proceed to the clinic.",
       "choices": [
         {
-          "text": "Next.",
+          "text": "Next",
           "next": "clinic"
         }
       ]
@@ -30,11 +30,11 @@
       "text": "The doctor would like to take some basic vital signs. Your age can affect how the doctor chooses to measure your vitals. \n\nAre you over the age of 80?",
       "choices": [
         {
-          "text": "Yes.",
+          "text": "Yes",
           "next": "bp_over_80"
         },
         {
-          "text": "No.",
+          "text": "No",
           "next": "bp_under_80"
         }
       ]
@@ -43,7 +43,7 @@
       "text": "In patients of older ages, blood pressure can vary depending on the patient's resting position. \n\n To get a comprehensive understanding of your blood pressure, both sitting and standing measurements will be taken.",
       "choices": [
         {
-          "text": "Measure sitting and standing blood pressure.",
+          "text": "Measure sitting and standing blood pressure",
           "next": "bp"
         }
       ]
@@ -52,7 +52,7 @@
       "text": "At the clinic, your blood pressure will be measured. This initial test is essential for assessing your health status.",
       "choices": [
         {
-          "text": "Measure blood pressure.",
+          "text": "Measure blood pressure",
           "next": "bp"
         }
       ]
@@ -61,7 +61,7 @@
       "text": "Your blood pressure results came back with a systolic blood pressure reading of 142 mm Hg, indicating borderline hypertension.\n\n To explore your treatment options, we need to dive into your patient profile and medical history.",
       "choices": [
         {
-          "text": "Next.",
+          "text": "Next",
           "next": "diabetes"
         }
       ]
@@ -70,11 +70,11 @@
       "text": "Knowing your history of diabetes is crucial because it can influence the management of your hypertension.\n\n Are you diabetic? Suggestion: Flip a coin to decide your diabetes status \uD83E\uDE99.",
       "choices": [
         {
-          "text": "Head.",
+          "text": "Head",
           "next": "diabetes_yes"
         },
         {
-          "text": "Tail.",
+          "text": "Tail",
           "next": "diabetes_no"
         }
       ]
@@ -83,7 +83,7 @@
       "text": "You are diabetic. Hypertension affects 20-60% of patients with diabetes, and diabetic patients with hypertension are at particularly high risk of complications like heart attacks. As a result, your best option is to begin treatment right away to manage your blood pressure.\n\n Angiotensin converting enzyme inhibitors (ACEIs) are the first line of management of diabetic hypertensives, and your doctor will place you on that without undergoing further examination.",
       "choices": [
         {
-          "text": "Treat with ACEi or ARB.",
+          "text": "Treat with ACEi or ARB",
           "next": "summary"
         }
       ]
@@ -92,11 +92,11 @@
       "text": "You are not diabetic. That is cause for some relief. Diabetic patients with hypertension are at particularly high risk of complications like heart attacks.\n\n Moving on to your age: are you above the age of 40?",
       "choices": [
         {
-          "text": "Yes.",
+          "text": "Yes",
           "next": "age_over_40"
         },
         {
-          "text": "No.",
+          "text": "No",
           "next": "age_under_40"
         }
       ]
@@ -105,7 +105,7 @@
       "text": "In young patients, hypertension might signal secondary causes rather than primary hypertension,which is more common in older adults.\n\n Because of your age, the doctor will need to conduct a comprehensive secondary cause assessment to uncover any underlying conditions such as kidney disease, hormonal disorders, or congenital heart defects that could be causing the elevated blood pressure. Early detection and treatment of these causes are crucial for preventing long-term health complications.\n\n Click \"Next\" to proceed through MRI and lab tests.",
       "choices": [
         {
-          "text": "Next.",
+          "text": "Next",
           "next": "diagnosis"
         }
       ]
@@ -114,7 +114,7 @@
       "text": "Thankfully, everything is normal and these tests confirm that you are diagnosed with primary hypertension, which does not have a clear underlying cause but could be influenced by a combination of genetic factors, lifestyle choices, and environmental factors.",
       "choices": [
         {
-          "text": "Next.",
+          "text": "Next",
           "next": "age_over_40"
         }
       ]
@@ -123,7 +123,7 @@
       "text": "Because of your age, it is likely that you have primary hypertension,which does not have a clear underlying cause but could be influenced by a combination of genetic factors, lifestyle choices, and environmental factors. \n\n It's now important to check for any damage to your organs that might have been caused by elevated blood pressure levels. \n\n Click \"Next\" to proceed through tests including echocardiograms to check for heart damage and chemistry tests to assess kidney health.",
       "choices": [
         {
-          "text": "Next.",
+          "text": "Next",
           "next": "organ_damage"
         }
       ]
@@ -132,11 +132,11 @@
       "text": "Flip a coin to reveal the results of the organ damage tests \uD83E\uDE99.",
       "choices": [
         {
-          "text": "Heads.",
+          "text": "Heads",
           "next": "organ_damage_yes"
         },
         {
-          "text": "Tails.",
+          "text": "Tails",
           "next": "organ_damage_no"
         }
       ]
@@ -145,11 +145,11 @@
       "text": "The tests have been completed and the good news is that they confirm you do not have any target organ damage. This is a positive sign for your health moving forward.\n\nAs one last check, have you had a recent ophthalmology assessment? It's important to check for signs of hypertensive eye disease. Flip a coin to decide \uD83E\uDE99.",
       "choices": [
         {
-          "text": "Heads.",
+          "text": "Heads",
           "next": "ophthalmology_damage_yes"
         },
         {
-          "text": "Tails.",
+          "text": "Tails",
           "next": "ophthalmology"
         }
       ]
@@ -158,11 +158,11 @@
       "text": "The doctor will perform an ophthalmology assessment to carefully check your eyes for any signs of damage caused by high blood pressure, ensuring your vision and eye health are safeguarded.\n\nDoes the assessment indicate hypertensive eye disease? Flip a coin to decide \uD83E\uDE99.",
       "choices": [
         {
-          "text": "Head.",
+          "text": "Head",
           "next": "ophthalmology_damage_yes"
         },
         {
-          "text": "Tails.",
+          "text": "Tails",
           "next": "monitor_bp"
         }
       ]
@@ -171,7 +171,7 @@
       "text": " Your ophthalmology tests indicate indicate hypertensive eye disease, which means that one or more of your body's organs have been affected by high blood pressure. Because of this, you are at risk of health complications and you should undergo treatment right away to manage your hypertension effectively.",
       "choices": [
         {
-          "text": "Treat right away.",
+          "text": "Treat right away",
           "next": "ancestry"
         }
       ]
@@ -180,7 +180,7 @@
       "text": "With no target organ damage and no hypertensive eye disease, your early diagnosis and mild hypertension indicates that regular blood pressure monitoring and lifestyle management may be a good approach to start with.\n\n Your blood pressure will be monitored continuously over the course of the next several weeks before treatment options are evaluated. \n\n However, the doctor will 'prescribe' lifestyle guidance to reduce salt intake, exercise regularly, and eat a healthy diet to see if this helps reduce your blood pressure over time.",
       "choices": [
         {
-          "text": "Monitor BP, re-measure over 7 days.",
+          "text": "Monitor BP, re-measure over 7 days",
           "next": "summary"
         }
       ]
@@ -189,7 +189,7 @@
       "text": " Tests indicate that one or more of your body's organs have been affected by high blood pressure. Because of this, you are at risk of health complications and you should undergo treatment right away to manage your hypertension effectively.",
       "choices": [
         {
-          "text": "Treat right away.",
+          "text": "Treat right away",
           "next": "ancestry"
         }
       ]
@@ -198,11 +198,11 @@
       "text": "Individuals with certain ancestry backgrounds tend to respond differently to certain anti-hypertensive medications.\n\n Does your ancestry include African or Afro-Caribbean roots?",
       "choices": [
         {
-          "text": "Yes.",
+          "text": "Yes",
           "next": "afrocaribean_ancestry_yes"
         },
         {
-          "text": "No.",
+          "text": "No",
           "next": "afrocaribean_ancestry_no"
         }
       ]
@@ -211,7 +211,7 @@
       "text": "Clinical studies have shown that hypertensive patients of African or Afro-Caribbean ancestry respond well to Calcium Channel Blockers (CCBs) and this is recommended as initial treatment. \n\n The doctor will start you on CCBs alongside lifestyle guidelines to reduce salt intake, exercise regularly, and eat a healthy diet..",
       "choices": [
         {
-          "text": "Treat with CCB.",
+          "text": "Treat with CCB",
           "next": "summary"
         }
       ]
@@ -220,7 +220,7 @@
       "text": "Based on your profile, treating your hypertension with ACE inhibitors or Angiotensin II Receptor Blockers (ARBs) is recommended. \n\n Your doctor will start you on one of these alongside lifestyle guidelines to reduce salt intake, exercise regularly, and eat a healthy diet.",
       "choices": [
         {
-          "text": "Treat with ACEi or ARB.",
+          "text": "Treat with ACEi or ARB",
           "next": "summary"
         }
       ]
@@ -229,7 +229,7 @@
       "text": "Your data enter a biobank on hypertension in UK patients to enable future research. Depending on your risk profile and patient journey, you could be missing certain measurements that other hypertensive patients experienced in their journeys.\n\n Is it possible your data have contributed to \"structured missingness\" in the biobank database?",
       "choices": [
         {
-          "text": "Next.",
+          "text": "Next",
           "next": "end"
         }
       ]
