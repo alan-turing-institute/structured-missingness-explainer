@@ -41,6 +41,7 @@
     },
     "bp_over_80": {
       "text": "In patients of older ages, blood pressure can vary depending on the patient's resting position. \n\n To get a comprehensive understanding of your blood pressure, both sitting and standing measurements will be taken.",
+      "variable" : "blood_pressure",
       "choices": [
         {
           "text": "Measure sitting and standing blood pressure",

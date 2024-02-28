@@ -4,6 +4,7 @@ interface IChoice {
 }
 
 interface IStoryPart {
+    variable?: string;
     text: string;
     choices: IChoice[];
 }
@@ -25,6 +26,40 @@ async function fetchStory(): Promise<IStoryData> {
     return await response.json();
 }
 
+function createBloodPressureElement(): HTMLElement {
+    const slider = document.createElement('input');
+    slider.type = "range";
+    slider.min = "100";
+    slider.max = "200";
+    slider.value = "120";
+    slider.className = "slider is-fullwidth is-large";
+
+    let direction = 1;
+    let value = 120;
+    let animate = setInterval(function() {
+        if (value >= 200) direction = -2;
+        if (value <= 100) direction = 2;
+        value += direction;
+        slider.value = value.toString();
+      }, 1);
+    
+    const button = document.createElement('button');
+    button.className = "button is-primary is-large is-rounded"
+    button.innerText = "Take measurement";
+    button.addEventListener('click', () => {
+        clearInterval(animate);
+        console.log("Blood pressure measurement: " + slider.value);
+    });
+
+    const wrapper = document.createElement('div');
+    wrapper.appendChild(slider);
+    wrapper.appendChild(document.createElement('br'));
+    wrapper.appendChild(button);
+
+    return wrapper;
+}
+
+
 
 // Overall card element for the story part
 function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElement {
@@ -42,6 +77,12 @@ function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElem
     const content = document.createElement('div');
     content.className = "card-content";
     content.innerText = storyPart.text;
+
+    if (storyPart.variable && storyPart.variable == "blood_pressure") {
+        // create an animated slider for blood pressure measurement
+        const bloodPressureElement = createBloodPressureElement();
+        content.appendChild(bloodPressureElement);   
+    }
 
     card.appendChild(cardHeader);
     card.appendChild(content);
