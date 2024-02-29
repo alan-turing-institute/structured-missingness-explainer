@@ -1,4 +1,4 @@
-import "nes.css/css/nes.min.css";
+
 
 interface IChoice {
     text: string;
@@ -29,36 +29,104 @@ async function fetchStory(): Promise<IStoryData> {
 }
 
 function createBloodPressureElement(): HTMLElement {
-    const slider = document.createElement('input');
-    slider.type = "range";
-    slider.min = "100";
-    slider.max = "200";
-    slider.value = "120";
-    slider.className = "slider is-fullwidth is-large";
+    // const slider = document.createElement('input');
+    // slider.type = "range";
+    // slider.min = "100";
+    // slider.max = "200";
+    // slider.value = "120";
+    // slider.className = "slider is-fullwidth is-large";
+
+    // let direction = 1;
+    // let value = 120;
+    // let animate = setInterval(function() {
+    //     if (value >= 200) direction = -2;
+    //     if (value <= 100) direction = 2;
+    //     value += direction;
+    //     slider.value = value.toString();
+    //   }, 1);
+    
+    // const button = document.createElement('button');
+    // button.className = "button is-primary is-large is-rounded"
+    // button.innerText = "Take measurement";
+    // button.addEventListener('click', () => {
+    //     clearInterval(animate);
+    //     console.log("Blood pressure measurement: " + slider.value);
+    // });
+
+    // const wrapper = document.createElement('div');
+    // wrapper.appendChild(slider);
+    // wrapper.appendChild(document.createElement('br'));
+    // wrapper.appendChild(button);
+
+    // return wrapper;
+
+    // To create: <progress class="nes-progress" value="90" max="100"></progress>
+    const progress = document.createElement('progress');
+    progress.className = "nes-progress";
+    progress.value = 140;
+    progress.max = 200;
 
     let direction = 1;
-    let value = 120;
+    let value = 140;
     let animate = setInterval(function() {
         if (value >= 200) direction = -2;
-        if (value <= 100) direction = 2;
+        if (value <= 140) direction = 2;
         value += direction;
-        slider.value = value.toString();
+        progress.value = value;
       }, 1);
-    
+
     const button = document.createElement('button');
-    button.className = "button is-primary is-large is-rounded"
+    button.className = "nes-btn is-warning";
     button.innerText = "Take measurement";
     button.addEventListener('click', () => {
         clearInterval(animate);
-        console.log("Blood pressure measurement: " + slider.value);
+
+        // display the blood pressure measurement in a diaglog box
+        // Recreate the following html in typescript
+        // <dialog class="nes-dialog" id="dialog-default">
+        //     <form method="dialog">
+        //     <p class="title">Dialog</p>
+        //     <p>Alert: this is a dialog.</p>
+        //     <menu class="dialog-menu">
+        //         <button class="nes-btn">Cancel</button>
+        //         <button class="nes-btn is-primary">Confirm</button>
+        //     </menu>
+        //     </form>
+        // </dialog>
+        const dialog = document.createElement('dialog');
+        dialog.className = "nes-dialog";
+        dialog.id = "dialog-default";
+        const form = document.createElement('form');
+        form.method = "dialog";
+        const title = document.createElement('p');
+        title.className = "title";
+        title.innerText = "Your blood pressure is: " + progress.value;
+        form.appendChild(title);
+        const menu = document.createElement('menu');
+        menu.className = "dialog-menu";
+        const cancelButton = document.createElement('button');
+        cancelButton.className = "nes-btn is-error";
+        cancelButton.innerText = "Oh no!";
+        cancelButton.addEventListener('click', () => {
+            dialog.close();
+        });
+        menu.appendChild(cancelButton);
+        form.appendChild(menu);
+        dialog.appendChild(form);
+        document.body.appendChild(dialog);
+        dialog.showModal();
+
+
+
+        console.log("Blood pressure measurement: " + progress.value);
     });
 
     const wrapper = document.createElement('div');
-    wrapper.appendChild(slider);
-    wrapper.appendChild(document.createElement('br'));
+    wrapper.appendChild(progress);
     wrapper.appendChild(button);
 
     return wrapper;
+
 }
 
 
@@ -66,18 +134,13 @@ function createBloodPressureElement(): HTMLElement {
 // Overall card element for the story part
 function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElement {
     const card = document.createElement('div');
-//    card.className = "card";
-
-    const cardHeader = document.createElement('header');
-    cardHeader.className = "card-header";
 
     const cardTitle = document.createElement('p');
     cardTitle.className = "title";
     cardTitle.innerText = "Step " + stepCounter;
-    cardHeader.appendChild(cardTitle);
+    card.appendChild(cardTitle);
 
-    const content = document.createElement('div');
-    content.className = "card-content";
+    const content = document.createElement('p');
     content.innerText = storyPart.text;
 
     if (storyPart.variable && storyPart.variable == "blood_pressure") {
@@ -86,7 +149,6 @@ function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElem
         content.appendChild(bloodPressureElement);   
     }
 
-    card.appendChild(cardHeader);
     card.appendChild(content);
 
     return card;
@@ -100,7 +162,7 @@ function createChoicesElement(storyPart: IStoryPart, button: HTMLElement): HTMLE
     storyPart.choices.forEach((choice: { text: string, next: string }) => {
         const choiceButton = document.createElement('button');
         choiceButton.innerText = choice.text;
-        choiceButton.className = "button is-link is-large";
+        choiceButton.className = "nes-btn is-primary";
         choiceButton.addEventListener('click', () => {
             currentStoryPart = choice.next;
             button.click(); // Trigger the next part of the story
@@ -109,6 +171,26 @@ function createChoicesElement(storyPart: IStoryPart, button: HTMLElement): HTMLE
     });
 
     return buttonWrapper;
+}
+
+function createAvatars(storyPart: IStoryPart, button:HTMLElement): HTMLElement {
+    const avatarWrapper = document.createElement('div');
+
+    const avatars = ["bulbasaur", "charmander", "kirby"];
+    avatars.forEach((avatar: string) => {
+        const avatarElement = document.createElement('i');
+        avatarElement.className = "nes-" + avatar;
+        avatarElement.style.fontSize = "3em";
+        avatarElement.style.cursor = "pointer";
+        avatarElement.style.margin = "1em";
+        avatarElement.addEventListener('click', () => {
+            currentStoryPart = storyPart.choices[avatars.indexOf(avatar)].next;
+            button.click(); // Trigger the next part of the story
+        });
+        avatarWrapper.appendChild(avatarElement);
+    });
+
+    return avatarWrapper;
 }
 
 function createFinalModalElement(storyPart: IStoryPart, userChoices: boolean[]): HTMLElement {
@@ -177,10 +259,6 @@ function createFinalModalElement(storyPart: IStoryPart, userChoices: boolean[]):
     });
     modalContent.appendChild(restartButton);
 
-
-
-    
-
     return modal;
 }
 
@@ -198,6 +276,7 @@ for (let i = 0; i < 11; i++) {
 
 window.onload = async () => {
     
+    console.log("Hello, world!");
     const button = document.getElementById('changeTextButton');
     const dataElement = document.getElementById('dataDisplay');
     const restartButton = document.getElementById('restartButton');
@@ -215,6 +294,8 @@ window.onload = async () => {
                 // TODO: from a public GitHub repository
                 const data = await fetchStory();
 
+
+
                 // Display the current part of the story
                 const storyPart: IStoryPart = data.story[currentStoryPart];
 
@@ -222,8 +303,26 @@ window.onload = async () => {
                     // display a modal
                     const modal = createFinalModalElement(storyPart, userChoices);
                     document.body.appendChild(modal);
-                } else {
+                } else if (currentStoryPart === 'start') {
+                    //   <i class="nes-bulbasaur"></i>
+                    dataElement.innerHTML = ''; // clear previous content 
 
+                    const card = createCardElement(storyPart, stepCounter);
+                    dataElement.appendChild(card);
+
+                    stepCounter++;
+
+                    // Create buttons for the choices
+                    const avatars = createAvatars(storyPart, button);         
+                    dataElement.appendChild(avatars);
+
+                    const choicesElement = document.getElementById('choices');
+                    if (choicesElement) {
+                        choicesElement.innerHTML = ''; // Clear previous choices
+                    }
+
+                } else {
+                    
                     dataElement.innerHTML = ''; // clear previous content 
 
                     const card = createCardElement(storyPart, stepCounter);
