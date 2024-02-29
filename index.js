@@ -8,6 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+require("nes.css/css/nes.min.css");
 function fetchStory() {
     return __awaiter(this, void 0, void 0, function* () {
         const response = yield fetch('data/demo_scenarios.json');
@@ -54,7 +56,7 @@ function createCardElement(storyPart, stepCounter) {
     const cardHeader = document.createElement('header');
     cardHeader.className = "card-header";
     const cardTitle = document.createElement('p');
-    cardTitle.className = "card-header-title";
+    cardTitle.className = "title";
     cardTitle.innerText = "Step " + stepCounter;
     cardHeader.appendChild(cardTitle);
     const content = document.createElement('div');
@@ -130,7 +132,8 @@ function createFinalModalElement(storyPart, userChoices) {
     modal.appendChild(modalClose);
     // restart button
     const restartButton = document.createElement('button');
-    restartButton.className = "button is-danger is-rounded is-large";
+    restartButton.className = "nes-btn";
+    restartButton.type = "button";
     restartButton.innerText = "Restart";
     restartButton.addEventListener('click', () => {
         currentStoryPart = 'start';
@@ -154,8 +157,8 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     const restartButton = document.getElementById('restartButton');
     if (button && dataElement && restartButton) {
         // Add Bulma classes to the button
-        button.className = "button is-primary";
-        restartButton.className = "button is-rounded is-large is-white";
+        //button.className = "nes-btn is-primary"
+        //restartButton.className = "nes-btn is-error";
         let stepCounter = 1;
         button.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
             try {

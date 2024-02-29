@@ -1,3 +1,5 @@
+import "nes.css/css/nes.min.css";
+
 interface IChoice {
     text: string;
     next: string;
@@ -70,7 +72,7 @@ function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElem
     cardHeader.className = "card-header";
 
     const cardTitle = document.createElement('p');
-    cardTitle.className = "card-header-title";
+    cardTitle.className = "title";
     cardTitle.innerText = "Step " + stepCounter;
     cardHeader.appendChild(cardTitle);
 
@@ -165,7 +167,8 @@ function createFinalModalElement(storyPart: IStoryPart, userChoices: boolean[]):
 
     // restart button
     const restartButton = document.createElement('button');
-    restartButton.className = "button is-danger is-rounded is-large";
+    restartButton.className = "nes-btn";
+    restartButton.type = "button";
     restartButton.innerText = "Restart";
     restartButton.addEventListener('click', () => {
         currentStoryPart = 'start';
@@ -201,8 +204,8 @@ window.onload = async () => {
 
     if (button && dataElement && restartButton) {
         // Add Bulma classes to the button
-        button.className = "button is-primary"
-        restartButton.className = "button is-rounded is-large is-white";
+        //button.className = "nes-btn is-primary"
+        //restartButton.className = "nes-btn is-error";
 
         let stepCounter = 1;
 

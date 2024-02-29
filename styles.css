@@ -1,22 +1,5 @@
 
 
-html, body {
-    background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('./img/scott-webb-sy0wzqgmf8a-unsplash-bw.jpg');
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;    
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    height: 100%;
-    margin: 0;
-    
-}  
-
-.content {
-    overflow-y: auto;
-}
 
 /* Hack to make the magic button invisible, fix later */
 #changeTextButton {

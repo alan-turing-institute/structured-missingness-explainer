@@ -3,8 +3,9 @@
 <head>
     <title>Explaining Structured Missingness</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-    <script src="/node_modules/bulma-extensions/bulma-calendar/dist/bulma-slider.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
 <body>
     <div id="wrapper">
@@ -30,13 +31,13 @@
             <div class="column is-three-fifths">
                 <div class="is-size-4">
                     <button id="changeTextButton">Magic button</button>      
-                    <div class="card mt-6">
+                    <div class="nes-container is-rounded with-title">
                         <p id="dataDisplay"></p>
                         <div id="choices"></div>
                     </div>  
                     <br />
                     <div class="has-text-centered mt-3">
-                        <button id="restartButton" class="button is-large">Restart</button>      
+                        <button id="restartButton" class="nes-btn is-error">Restart</button>      
                     </div>
                 </div>
             </div>
