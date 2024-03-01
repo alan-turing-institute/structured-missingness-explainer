@@ -44,16 +44,17 @@
       "variable" : "blood_pressure",
       "choices": [
         {
-          "text": "Measure sitting and standing blood pressure",
+          "text": "Continue",
           "next": "bp"
         }
       ]
     },
     "bp_under_80": {
       "text": "At the clinic, your blood pressure will be measured. This initial test is essential for assessing your health status.",
+      "variable" : "blood_pressure",
       "choices": [
         {
-          "text": "Measure blood pressure",
+          "text": "Continue",
           "next": "bp"
         }
       ]
@@ -68,7 +69,7 @@
       ]
     },
     "diabetes": {
-      "text": "Knowing your history of diabetes is crucial because it can influence the management of your hypertension.\n\n Are you diabetic? Suggestion: Flip a coin to decide your diabetes status \uD83E\uDE99.",
+      "text": "Knowing your history of diabetes is crucial because it can influence the management of your hypertension.\n\n Are you diabetic? Suggestion: Flip a coin to decide your diabetes status.",
       "choices": [
         {
           "text": "Head",
@@ -130,7 +131,7 @@
       ]
     },
     "organ_damage": {
-      "text": "Flip a coin to reveal the results of the organ damage tests \uD83E\uDE99.",
+      "text": "Flip a coin to reveal the results of the organ damage tests.",
       "choices": [
         {
           "text": "Heads",
@@ -143,7 +144,7 @@
       ]
     },
     "organ_damage_no": {
-      "text": "The tests have been completed and the good news is that they confirm you do not have any target organ damage. This is a positive sign for your health moving forward.\n\nAs one last check, have you had a recent ophthalmology assessment? It's important to check for signs of hypertensive eye disease. Flip a coin to decide \uD83E\uDE99.",
+      "text": "The tests have been completed and the good news is that they confirm you do not have any target organ damage. This is a positive sign for your health moving forward.\n\nAs one last check, have you had a recent ophthalmology assessment? It's important to check for signs of hypertensive eye disease. Flip a coin to decide.",
       "choices": [
         {
           "text": "Heads",
@@ -156,7 +157,7 @@
       ]
     },
     "ophthalmology": {
-      "text": "The doctor will perform an ophthalmology assessment to carefully check your eyes for any signs of damage caused by high blood pressure, ensuring your vision and eye health are safeguarded.\n\nDoes the assessment indicate hypertensive eye disease? Flip a coin to decide \uD83E\uDE99.",
+      "text": "The doctor will perform an ophthalmology assessment to carefully check your eyes for any signs of damage caused by high blood pressure, ensuring your vision and eye health are safeguarded.\n\nDoes the assessment indicate hypertensive eye disease? Flip a coin to decide.",
       "choices": [
         {
           "text": "Head",

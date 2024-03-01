@@ -18,33 +18,6 @@ function fetchStory() {
     });
 }
 function createBloodPressureElement() {
-    // const slider = document.createElement('input');
-    // slider.type = "range";
-    // slider.min = "100";
-    // slider.max = "200";
-    // slider.value = "120";
-    // slider.className = "slider is-fullwidth is-large";
-    // let direction = 1;
-    // let value = 120;
-    // let animate = setInterval(function() {
-    //     if (value >= 200) direction = -2;
-    //     if (value <= 100) direction = 2;
-    //     value += direction;
-    //     slider.value = value.toString();
-    //   }, 1);
-    // const button = document.createElement('button');
-    // button.className = "button is-primary is-large is-rounded"
-    // button.innerText = "Take measurement";
-    // button.addEventListener('click', () => {
-    //     clearInterval(animate);
-    //     console.log("Blood pressure measurement: " + slider.value);
-    // });
-    // const wrapper = document.createElement('div');
-    // wrapper.appendChild(slider);
-    // wrapper.appendChild(document.createElement('br'));
-    // wrapper.appendChild(button);
-    // return wrapper;
-    // To create: <progress class="nes-progress" value="90" max="100"></progress>
     const progress = document.createElement('progress');
     progress.className = "nes-progress";
     progress.value = 140;
@@ -64,18 +37,6 @@ function createBloodPressureElement() {
     button.innerText = "Take measurement";
     button.addEventListener('click', () => {
         clearInterval(animate);
-        // display the blood pressure measurement in a diaglog box
-        // Recreate the following html in typescript
-        // <dialog class="nes-dialog" id="dialog-default">
-        //     <form method="dialog">
-        //     <p class="title">Dialog</p>
-        //     <p>Alert: this is a dialog.</p>
-        //     <menu class="dialog-menu">
-        //         <button class="nes-btn">Cancel</button>
-        //         <button class="nes-btn is-primary">Confirm</button>
-        //     </menu>
-        //     </form>
-        // </dialog>
         const dialog = document.createElement('dialog');
         dialog.className = "nes-dialog";
         dialog.id = "dialog-default";
@@ -120,6 +81,15 @@ function createCardElement(storyPart, stepCounter) {
         content.appendChild(bloodPressureElement);
     }
     card.appendChild(content);
+    // if storyPart.text contains "Flip a coin", add a coin icon
+    if (storyPart.text.includes("Flip a coin")) {
+        const coinWrapper = document.createElement('div');
+        coinWrapper.className = "columns is-centered";
+        const coin = document.createElement('i');
+        coin.className = "nes-icon coin is-large";
+        coinWrapper.appendChild(coin);
+        card.appendChild(coinWrapper);
+    }
     return card;
 }
 // Next step choice buttons
@@ -146,7 +116,7 @@ function createAvatars(storyPart, button) {
         avatarElement.className = "nes-" + avatar;
         avatarElement.style.fontSize = "3em";
         avatarElement.style.cursor = "pointer";
-        avatarElement.style.margin = "1em";
+        avatarElement.style.margin = "0.3em";
         avatarElement.addEventListener('click', () => {
             currentStoryPart = storyPart.choices[avatars.indexOf(avatar)].next;
             button.click(); // Trigger the next part of the story
