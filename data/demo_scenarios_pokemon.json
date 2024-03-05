@@ -1,7 +1,7 @@
 {
   "story": {
     "start": {
-      "text": "Select a Pokémon to begin your journey.\n:",
+      "text": "Select a Pokémon to begin your journey:\n",
       "choices": [
         {
           "text": "Man",
@@ -31,15 +31,24 @@
       "choices": [
         {
           "text": "Pre-evolved - Pikachu, Charmander, or Squirtle",
-          "next": "bp_under_80"
+          "next": "bp_under_80",
+          "data": {
+            "old": false
+          }
         },
         {
           "text": "Stage 1 - Raichu, Charmeleon, or Wartortle\n",
-          "next": "bp_over_80"
+          "next": "bp_over_80",
+          "data": {
+            "old": true
+          }
         },
         {
           "text": "Stage 2 - Raichu+, Charizard, or Blastoise \n",
-          "next": "bp_over_80"
+          "next": "bp_over_80",
+          "data": {
+            "old": true
+          }
         }
       ]
     },
@@ -77,17 +86,12 @@
       "choices": [
         {
           "text": "Less than 3",
-          "next": "conference_arrival",
-          "data": {
-            "coffee_data": false
-          }
+          "next": "conference_arrival"
+
         },
         {
           "text": "More than 3",
-          "next": "conference_arrival",
-          "data": {
-            "coffee_data": true
-          }
+          "next": "coffee_yes"
         }
       ]
     },
@@ -96,21 +100,15 @@
       "choices": [
         {
           "text": "Walked, ran or flew\n",
-          "next": "exercise",
-          "data": {
-            "exercise_data": true
-          }
+          "next": "exercise"
         },
         {
           "text": "Public transport or carried by you in their Poké Ball\n",
-          "next": "exercise",
-          "data": {
-            "exercise_data": false
-          }
+          "next": "exercise_no"
         }
       ]
     },
-    "exercise": {
+    "exercise_no": {
       "text": "Let’s take your Pokémon’s blood pressure one more time. \n",
       "variable": "blood_pressure",
       "choices": [
@@ -118,11 +116,10 @@
           "text": "Save blood pressure",
           "next": "bp2"
         }
-      ],
-      "conditions": [
-        {
-          "check": "data.exercise_data",
-          "text": "Recent caffeine or exercise might explain a higher BP reading. In this case, the doctor will see your Pokémon for a second blood pressure read later in the day.\n",
+      ]
+    },
+      "coffee_yes":{
+          "text": "Recent caffeine might explain a higher BP reading. In this case, the doctor will see your Pokémon for a second blood pressure read later in the day.\n",
           "variable": "blood_pressure",
           "choices": [
             {
@@ -131,9 +128,9 @@
             }
           ]
         },
+        "exercise":
         {
-          "check": "data.coffee_data",
-          "text": "Recent caffeine or exercise might explain a higher BP reading. In this case, the doctor will see your Pokémon for a second blood pressure read later in the day.\n",
+          "text": "Recent exercise might explain a higher BP reading. In this case, the doctor will see your Pokémon for a second blood pressure read later in the day.\n",
           "variable": "blood_pressure",
           "choices": [
             {
@@ -141,9 +138,7 @@
               "next": "bp2"
             }
           ]
-        }
-      ]
-    },
+        },
     "bp2": {
       "text": "Your Pokémon’s blood pressure remains high and is cause for continued clinical evaluation.",
       "choices": [
@@ -154,7 +149,7 @@
       ]
     },
     "diabetes": {
-      "text": "Now that we've checked those environmental factors, let's go through some medical history. Is your Pokémon diabetic? Knowing any history of diabetes is crucial because it can influence the management of your hypertension. Flip a coin. ",
+      "text": "Now that we've checked those environmental factors, let's go through some medical history. Is your Pokémon diabetic?\n Knowing any history of diabetes is crucial because it can influence the management of your hypertension. Flip a coin. ",
       "choices": [
         {
           "text": "Head",
@@ -251,20 +246,20 @@
       ]
     },
     "ophthalmology": {
-      "text": "As one last check, we'll look for signs of hypertensive eye disease. \n\nHave they had a recent eye test or ophthalmology examination? Yes/No.\n",
+      "text": "As one last check, we'll look for signs of hypertensive eye disease. \n\nHave they had a recent eye test or ophthalmology examination? \n",
       "choices": [
         {
-          "text": "Heads",
+          "text": "Yes",
           "next": "ophthalmology_records"
         },
         {
-          "text": "Tails",
+          "text": "No",
           "next": "ophthalmology_damage_yes"
         }
       ]
     },
     "ophthalmology_records": {
-      "text": "Let's pull up their medical records. No sign of hypertensive eye disease was found on their recent exam.\u2028 Their early diagnosis indicates that regular BP monitoring over the next several weeks and lifestyle management may be a good approach going forward. \n",
+      "text": "Let's pull up their medical records.\nNo sign of hypertensive eye disease was found on their recent exam.\u2028 Their early diagnosis indicates that regular BP monitoring over the next several weeks and lifestyle management may be a good approach going forward. \n",
       "choices": [
         {
           "text": "Next.",
