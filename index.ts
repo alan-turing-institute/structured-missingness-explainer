@@ -21,7 +21,7 @@ interface IStoryData {
 }
 
 async function fetchStory(): Promise<IStoryData> {
-    const response = await fetch('data/demo_scenarios.json');
+    const response = await fetch('data/demo_scenarios_pokemon.json');
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
