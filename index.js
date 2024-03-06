@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 function fetchStory() {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch('data/demo_scenarios.json');
+        const response = yield fetch('data/demo_scenarios_pokemon.json');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
