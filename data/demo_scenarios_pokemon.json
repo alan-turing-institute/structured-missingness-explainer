@@ -159,7 +159,8 @@
           "text": "Tail",
           "next": "diabetes_no"
         }
-      ]
+      ],
+      "info": "Approximately 10% of people in the UK have diabetes. This animated coin is biased to reflect this probability."
     },
     "diabetes_yes": {
       "text": "Based on the coin flip, your Pokémon is diabetic and therefore is at increased risk of complications from hypertension. Your best option is to begin treatment right away with ACE inhibitors. \n",
@@ -168,7 +169,8 @@
           "text": "Treat with ACEi",
           "next": "end_journey"
         }
-      ]
+      ],
+      "info": "Hypertension affects 20-60% of patients with diabetes, and diabetic patients with hypertension are at particularly high risk of complications like heart attacks. Angiotensin Converting Enzyme inhibitors (ACEIs) are the first line of management of diabetic hypertensives." 
     },
     "diabetes_no": {
       "text": "Based on the coin flip, your Pokémon is not diabetic. That is cause for some relief.\n Diabetic patients with hypertension are at particularly high risk of complications like heart attacks. \n",
@@ -305,7 +307,8 @@
           "text": "Treat with CCB",
           "next": "end_journey"
         }
-      ]
+      ],
+      "info" : "In humans, clinical studies have shown that hypertensive patients of African or Afro-Caribbean descent respond well to Calcium Channel Blockers (CCBs) and this is recommended as initial treatment for newly diagnosed patients."
     },
     "afrocaribean_ancestry_no": {
       "text": "Fire or electric type Pokémon like Charmander and Pikachu typically respond well to initial treatment with ACE inhibitors or Angiotensin II Receptor Blockers (ARBs) and this is recommended alongside lifestyle modifications. \n",
@@ -314,7 +317,8 @@
           "text": "Treat with ACEi or ARB",
           "next": "end_journey"
         }
-      ]
+      ],
+      "info": "In humans, clinical studies have shown that ACE inhibitors and ARBs are effective in patients of non-African and non-Afro-Caribbean descent."
     },
     "end_journey": {
       "text": "Your Pokémon’s clinical journey ends here. \n\nThank you for taking part. Click “Next” to see how this data might be used in the real-world.\n",
@@ -332,7 +336,8 @@
           "text": "Next",
           "next": "choices"
         }
-      ]
+      ],
+      "style": "summary"
     },
     "choices": {
       "text": "Based on your Pokémon’s clinical journey, they could have measured or NOT measured any of the following variables:\n\n- Sitting and standing blood pressure\n- Sequence of repeated blood pressure measurements\n- MRI\n- EKG\n- Lab chemistry tests\n- Ophthalmology exam\n- ACE inhibitor treatment\n- Calcium channel blockers treatment\n\nWhich ones did you capture in your journey? \nGotta catch ’em all! \n",
@@ -341,7 +346,8 @@
           "text": "Next",
           "next": "structured_missingness"
         }
-      ]
+      ],
+      "style": "summary"
     },
     "structured_missingness": {
       "text": "“Structured missingness” happens when your data is combined with other data to form distinct structures, or blocks, of missingness across variables and patients. Here you can see the structured missingness in the biobank data, formed by combining your Pokémon’s medical records with those of other Pokémon who participated in this clinical journey. \n\nAn example of structured missingness is how older Pokémon of a certain age are always likely to be missing certain diagnostic assessments like MRIs and labs, or how diabetic Pokémon will proceed immediately to treatment and skip all other clinical examinations. Therefore, missingness is causally related across multiple missing variables. \n\nStructured missingness makes it challenging to analyze the data as a whole. \n",
@@ -350,7 +356,8 @@
           "text": "Next",
           "next": "end"
         }
-      ]
+      ],
+      "style": "summary"
     },
     "end": {
       "text": "Researchers at the Turing Institute and Roche are jointly working to better detect and resolve structured missingness in large, multi-modal health databases like the fictional biobank described in this demo. \n\nOne project is using graphical methods like “networks” and “hypergraphs” to visualise and unravel the hidden structure of missing data in complex datasets.\n\nAnother project is developing new mathematical theory to explain and find a solution to structured missing data.\n\nScan the QR codes below to read the latest publications and outputs in this area from the Turing-Roche Partnership\n"

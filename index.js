@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// Initialise values
+let userData = {};
+let userCollectedData = {};
+let currentStoryPart = 'start';
+// TODO: Change this, this is ugly and hard-coded and will not work in the long run!!!
+// create an array of 11 elements (boolean) to store the user's choices and fill it 
+// with random values for now
+let userChoices = [];
+for (let i = 0; i < 11; i++) {
+    userChoices.push(Math.random() >= 0.5);
+}
 function fetchStory() {
     return __awaiter(this, void 0, void 0, function* () {
         const response = yield fetch('data/demo_scenarios_pokemon.json');
@@ -181,13 +192,48 @@ function createFinalModalElement(storyPart, userChoices) {
     modalContent.appendChild(restartButton);
     return modal;
 }
-let currentStoryPart = 'start';
-// TODO: Change this, this is ugly and hard-coded and will not work in the long run!!!
-// create an array of 11 elements (boolean) to store the user's choices and fill it 
-// with random values for now
-let userChoices = [];
-for (let i = 0; i < 11; i++) {
-    userChoices.push(Math.random() >= 0.5);
+function createInfoButton(storyPart) {
+    // Create a button to display the info box
+    // the button will be placed in the corner of the card
+    const infoButton = document.createElement('button');
+    infoButton.className = "nes-btn is-warning";
+    infoButton.innerText = "info";
+    infoButton.style.position = "absolute";
+    infoButton.style.top = "0";
+    infoButton.style.right = "0";
+    infoButton.style.margin = "0.5em";
+    infoButton.style.fontSize = "1em";
+    infoButton.style.cursor = "pointer";
+    infoButton.addEventListener('click', () => {
+        const dialog = document.createElement('dialog');
+        dialog.className = "nes-dialog";
+        dialog.style.fontFamily = "Helvetica, sans-serif";
+        dialog.id = "dialog-default";
+        const form = document.createElement('form');
+        form.method = "dialog";
+        const title = document.createElement('p');
+        title.className = "title";
+        title.innerText = "Info";
+        form.appendChild(title);
+        const info = document.createElement('p');
+        info.innerText = (storyPart.info) ? storyPart.info : "No info available";
+        info.style.fontSize = "1.2em";
+        form.appendChild(info);
+        const menu = document.createElement('menu');
+        menu.className = "dialog-menu";
+        const cancelButton = document.createElement('button');
+        cancelButton.className = "button is-warning";
+        cancelButton.innerText = "Close";
+        cancelButton.addEventListener('click', () => {
+            dialog.close();
+        });
+        menu.appendChild(cancelButton);
+        form.appendChild(menu);
+        dialog.appendChild(form);
+        document.body.appendChild(dialog);
+        dialog.showModal();
+    });
+    return infoButton;
 }
 window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Hello, world!");
@@ -212,7 +258,6 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
                     document.body.appendChild(modal);
                 }
                 else if (currentStoryPart === 'start') {
-                    //   <i class="nes-bulbasaur"></i>
                     dataElement.innerHTML = ''; // clear previous content 
                     const card = createCardElement(storyPart, stepCounter);
                     dataElement.appendChild(card);
@@ -236,6 +281,10 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
                         choicesElement.innerHTML = ''; // Clear previous choices
                         const buttonWrapper = createChoicesElement(storyPart, button);
                         choicesElement.appendChild(buttonWrapper);
+                    }
+                    if (storyPart.info) {
+                        const infoButton = createInfoButton(storyPart);
+                        dataElement.appendChild(infoButton);
                     }
                 }
             }
