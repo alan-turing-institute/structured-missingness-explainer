@@ -263,6 +263,7 @@ function createModalElement(storyPart: IStoryPart, button: HTMLElement): HTMLEle
             currentStoryPart = 'start';
             modal.remove();
             window.location.reload();
+
         });
         buttonWrapper.appendChild(restartButton);
     }
@@ -273,7 +274,9 @@ function createModalElement(storyPart: IStoryPart, button: HTMLElement): HTMLEle
     modalClose.className = "modal-close is-large";
     modalClose.setAttribute('aria-label', 'close');
     modalClose.addEventListener('click', () => {
-        modal.remove();
+            currentStoryPart = 'start';
+            modal.remove();
+            window.location.reload();
     });
     modal.appendChild(modalClose);
 
