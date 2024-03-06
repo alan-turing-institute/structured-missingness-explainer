@@ -82,7 +82,12 @@ function createCardElement(storyPart, stepCounter) {
     const card = document.createElement('div');
     const cardTitle = document.createElement('p');
     cardTitle.className = "title";
-    cardTitle.innerText = "Step " + stepCounter;
+    if (storyPart.title) {
+        cardTitle.innerText = storyPart.title;
+    }
+    else {
+        cardTitle.innerText = "Step " + stepCounter;
+    }
     card.appendChild(cardTitle);
     const content = document.createElement('p');
     content.innerText = storyPart.text;
@@ -107,16 +112,23 @@ function createCardElement(storyPart, stepCounter) {
 function createChoicesElement(storyPart, button) {
     const buttonWrapper = document.createElement('div');
     buttonWrapper.className = "buttons is-centered";
-    storyPart.choices.forEach((choice) => {
-        const choiceButton = document.createElement('button');
-        choiceButton.innerText = choice.text;
-        choiceButton.className = "nes-btn is-primary";
-        choiceButton.addEventListener('click', () => {
-            currentStoryPart = choice.next;
-            button.click(); // Trigger the next part of the story
+    if (storyPart.choices) {
+        storyPart.choices.forEach((choice) => {
+            const choiceButton = document.createElement('button');
+            choiceButton.innerText = choice.text;
+            if (storyPart.style && storyPart.style == "summary") {
+                choiceButton.className = "button is-primary";
+            }
+            else {
+                choiceButton.className = "nes-btn is-primary";
+            }
+            choiceButton.addEventListener('click', () => {
+                currentStoryPart = choice.next;
+                button.click(); // Trigger the next part of the story
+            });
+            buttonWrapper.appendChild(choiceButton);
         });
-        buttonWrapper.appendChild(choiceButton);
-    });
+    }
     return buttonWrapper;
 }
 function createAvatars(storyPart, button) {
@@ -129,16 +141,17 @@ function createAvatars(storyPart, button) {
         avatarElement.style.cursor = "pointer";
         avatarElement.style.margin = "0.3em";
         avatarElement.addEventListener('click', () => {
-            currentStoryPart = storyPart.choices[avatars.indexOf(avatar)].next;
+            currentStoryPart = storyPart.choices ? storyPart.choices[avatars.indexOf(avatar)].next : "symptoms";
             button.click(); // Trigger the next part of the story
         });
         avatarWrapper.appendChild(avatarElement);
     });
     return avatarWrapper;
 }
-function createFinalModalElement(storyPart, userChoices) {
+function createModalElement(storyPart, button) {
     const modal = document.createElement('div');
     modal.className = "modal is-active";
+    modal.style.fontFamily = "Helvetica, sans-serif";
     const modalBackground = document.createElement('div');
     modalBackground.className = "modal-background";
     modal.appendChild(modalBackground);
@@ -153,25 +166,42 @@ function createFinalModalElement(storyPart, userChoices) {
     const text = document.createElement('p');
     text.innerText = storyPart.text;
     content.appendChild(text);
-    const dataTitle = document.createElement('h1');
-    dataTitle.className = "title is-4 mt-6";
-    dataTitle.innerText = "Your choices:";
-    content.appendChild(dataTitle);
-    // display user choices as a table with 1 row and 11 columns
-    // where the user's choices are displayed as grey or white
-    const table = document.createElement('table');
-    table.className = "table is-hoverable is-bordered is-fullwidth";
-    const tableRow = document.createElement('tr');
-    userChoices.forEach((choice) => {
-        const tableData = document.createElement('td');
-        tableData.innerText = choice ? "Yes" : "No";
-        tableData.style.backgroundColor = choice ? "hsl(48, 100%, 67%)" : "hsl(348, 100%, 61%)";
-        tableRow.appendChild(tableData);
-    });
-    table.appendChild(tableRow);
-    content.appendChild(table);
     modalContent.appendChild(content);
     modal.appendChild(modalContent);
+    // Buttons for next steps
+    const buttonWrapper = document.createElement('div');
+    buttonWrapper.className = "buttons is-centered";
+    if (storyPart.choices) {
+        storyPart.choices.forEach((choice) => {
+            const choiceButton = document.createElement('button');
+            choiceButton.innerText = choice.text;
+            if (storyPart.style && storyPart.style == "summary") {
+                choiceButton.className = "button is-primary";
+            }
+            else {
+                choiceButton.className = "nes-btn is-primary";
+            }
+            choiceButton.addEventListener('click', () => {
+                currentStoryPart = choice.next;
+                button.click(); // Trigger the next part of the story
+            });
+            buttonWrapper.appendChild(choiceButton);
+        });
+    }
+    else {
+        // restart button
+        const restartButton = document.createElement('button');
+        restartButton.className = "nes-btn";
+        restartButton.type = "button";
+        restartButton.innerText = "Restart";
+        restartButton.addEventListener('click', () => {
+            currentStoryPart = 'start';
+            modal.remove();
+            window.location.reload();
+        });
+        buttonWrapper.appendChild(restartButton);
+    }
+    modalContent.appendChild(buttonWrapper);
     const modalClose = document.createElement('button');
     modalClose.className = "modal-close is-large";
     modalClose.setAttribute('aria-label', 'close');
@@ -179,17 +209,6 @@ function createFinalModalElement(storyPart, userChoices) {
         modal.remove();
     });
     modal.appendChild(modalClose);
-    // restart button
-    const restartButton = document.createElement('button');
-    restartButton.className = "nes-btn";
-    restartButton.type = "button";
-    restartButton.innerText = "Restart";
-    restartButton.addEventListener('click', () => {
-        currentStoryPart = 'start';
-        modal.remove();
-        window.location.reload();
-    });
-    modalContent.appendChild(restartButton);
     return modal;
 }
 function createInfoButton(storyPart) {
@@ -252,12 +271,7 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
                 const data = yield fetchStory();
                 // Display the current part of the story
                 const storyPart = data.story[currentStoryPart];
-                if (currentStoryPart === 'end') {
-                    // display a modal
-                    const modal = createFinalModalElement(storyPart, userChoices);
-                    document.body.appendChild(modal);
-                }
-                else if (currentStoryPart === 'start') {
+                if (currentStoryPart === 'start') {
                     dataElement.innerHTML = ''; // clear previous content 
                     const card = createCardElement(storyPart, stepCounter);
                     dataElement.appendChild(card);
@@ -272,19 +286,26 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
                 }
                 else {
                     dataElement.innerHTML = ''; // clear previous content 
-                    const card = createCardElement(storyPart, stepCounter);
-                    dataElement.appendChild(card);
-                    stepCounter++;
-                    // Create buttons for the choices
-                    const choicesElement = document.getElementById('choices');
-                    if (choicesElement) {
-                        choicesElement.innerHTML = ''; // Clear previous choices
-                        const buttonWrapper = createChoicesElement(storyPart, button);
-                        choicesElement.appendChild(buttonWrapper);
+                    if (storyPart.style && storyPart.style == "summary") {
+                        // serious style
+                        const modal = createModalElement(storyPart, button);
+                        dataElement.appendChild(modal);
                     }
-                    if (storyPart.info) {
-                        const infoButton = createInfoButton(storyPart);
-                        dataElement.appendChild(infoButton);
+                    else {
+                        const card = createCardElement(storyPart, stepCounter);
+                        dataElement.appendChild(card);
+                        stepCounter++;
+                        // Create buttons for the choices
+                        const choicesElement = document.getElementById('choices');
+                        if (choicesElement) {
+                            choicesElement.innerHTML = ''; // Clear previous choices
+                            const buttonWrapper = createChoicesElement(storyPart, button);
+                            choicesElement.appendChild(buttonWrapper);
+                        }
+                        if (storyPart.info) {
+                            const infoButton = createInfoButton(storyPart);
+                            dataElement.appendChild(infoButton);
+                        }
                     }
                 }
             }

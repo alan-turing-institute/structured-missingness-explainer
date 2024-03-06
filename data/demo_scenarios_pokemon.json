@@ -337,6 +337,7 @@
           "next": "choices"
         }
       ],
+      "title": "Biobank",
       "style": "summary"
     },
     "choices": {
@@ -347,6 +348,7 @@
           "next": "structured_missingness"
         }
       ],
+      "title": "Collected data",
       "style": "summary"
     },
     "structured_missingness": {
@@ -357,10 +359,13 @@
           "next": "end"
         }
       ],
+      "title": "Structured missingness",
       "style": "summary"
     },
     "end": {
-      "text": "Researchers at the Turing Institute and Roche are jointly working to better detect and resolve structured missingness in large, multi-modal health databases like the fictional biobank described in this demo. \n\nOne project is using graphical methods like “networks” and “hypergraphs” to visualise and unravel the hidden structure of missing data in complex datasets.\n\nAnother project is developing new mathematical theory to explain and find a solution to structured missing data.\n\nScan the QR codes below to read the latest publications and outputs in this area from the Turing-Roche Partnership\n"
+      "text": "Researchers at the Turing Institute and Roche are jointly working to better detect and resolve structured missingness in large, multi-modal health databases like the fictional biobank described in this demo. \n\nOne project is using graphical methods like “networks” and “hypergraphs” to visualise and unravel the hidden structure of missing data in complex datasets.\n\nAnother project is developing new mathematical theory to explain and find a solution to structured missing data.\n\nScan the QR codes below to read the latest publications and outputs in this area from the Turing-Roche Partnership\n",
+      "style": "summary",
+      "title": "Turing - Roche research partnership"
     }
   }
 }
