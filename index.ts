@@ -126,6 +126,11 @@ function createBloodPressureElement(): HTMLElement {
 // Overall card element for the story part
 function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElement {
     const card = document.createElement('div');
+    if (storyPart.style && storyPart.style == "summary") {
+        // the card will have a standard Bulma style
+        card.className = "card";
+            
+    }
 
     const cardTitle = document.createElement('p');
     cardTitle.className = "title";
