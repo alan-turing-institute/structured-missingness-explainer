@@ -1,15 +1,15 @@
 {
   "variables": [
     { "id" : "old", "name": "Age", "display" : false },
-    { "id" : "blood_pressure", "name": "Blood pressure", "display" : true },
-    { "id" : "repeated_blood_pressure", "name": "Repeated blood pressure", "display" : true },
+    { "id" : "blood_pressure", "name": "Sitting and standing blood pressure", "display" : true },
+    { "id" : "repeated_blood_pressure", "name": "Sequence of repeated blood pressure measurements", "display" : true },
     { "id" : "diabetes", "name": "Diabetes", "display" : false },
-    { "id" : "MRI", "name": "MRI", "display" : true },
-    { "id" : "lab_tests", "name": "Lab tests", "display" : true },
+    { "id" : "MRI", "name": "MRI scan", "display" : true },
+    { "id" : "lab_tests", "name": "Lab chemistry tests", "display" : true },
     { "id" : "EKG", "name": "EKG", "display" : true },
-    { "id" : "opthalmology_test", "name": "Ophthalmology test", "display" : true },
-    { "id" : "ACEi_treatment", "name": "ACEi treatment", "display" : true },
-    { "id" : "CCB_treatment", "name": "CCB treatment", "display" : true }
+    { "id" : "opthalmology_test", "name": "Ophthalmology exam", "display" : true },
+    { "id" : "ACEi_treatment", "name": "ACE inhibitor treatment", "display" : true },
+    { "id" : "CCB_treatment", "name": "Calcium channel blockers treatment", "display" : true }
   ],
   "story": {
     "start": {
