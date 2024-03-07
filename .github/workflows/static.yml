@@ -38,3 +38,4 @@ jobs:
         with:
           BRANCH: gh-pages  # Change this to the branch you want to deploy to
           CLEAN: true       # Optional: Remove existing files in the deployment branch before deploying
+          FOLDER: .      # Change this to the folder containing your static files
