@@ -34,7 +34,7 @@ jobs:
         run: npx tsc  # Adjust the build script according to your project setup
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           BRANCH: gh-pages  # Change this to the branch you want to deploy to
           CLEAN: true       # Optional: Remove existing files in the deployment branch before deploying
