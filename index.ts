@@ -189,6 +189,18 @@ function createChoicesElement(storyPart: IStoryPart, button: HTMLElement): HTMLE
             buttonWrapper.appendChild(choiceButton);
         });
     }
+
+    // ugly and hacked together, but it should work for now
+    if (storyPart.variable && storyPart.variable == "age") {
+        // skip and go to the next part of the story directly
+        if (userCollectedData["old"] ) {
+            currentStoryPart = "age_over_40";
+            button.click();
+        } else {
+            currentStoryPart = "age_under_40";
+            button.click();
+        }
+    }
     return buttonWrapper;
 }
 
