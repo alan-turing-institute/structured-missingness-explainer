@@ -5,6 +5,15 @@ on:
     branches:
       - gh-pages  # Change this to the branch you want to deploy from
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,5 +37,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          BRANCH: gh-pages  # Change this to the branch you want to deploy to
-          CLEAN: true       # Optional: Remove existing files in the deployment branch before deploying
+            target_branch: gh-pages  # Change this to the branch you want to deploy to
