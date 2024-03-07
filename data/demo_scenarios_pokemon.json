@@ -30,34 +30,36 @@
       "text": "The doctor would like to take some basic vital signs. How old is your Pokémon (what evolutionary stage is it at)? Age can affect how the doctor chooses to measure vital signs. \n",
       "choices": [
         {
-          "text": "Pre-evolved - Pikachu, Charmander, or Squirtle",
+          "text": "Pre-evolved",
           "next": "bp_under_80",
           "data": {
             "old": false
           }
         },
         {
-          "text": "Stage 1 - Raichu, Charmeleon, or Wartortle\n",
+          "text": "Stage 1\n",
           "next": "bp_over_80",
           "data": {
             "old": true
           }
         },
         {
-          "text": "Stage 2 - Raichu+, Charizard, or Blastoise \n",
+          "text": "Stage 2\n",
           "next": "bp_over_80",
           "data": {
             "old": true
           }
         }
-      ]
+      ],
+      "info": "Pre-evolved - Pikachu, Charmander, or Squirtle.\n\nStage 1 - Raichu, Charmeleon, or Wartortle.\n\n Stage 2 - Raichu+, Charizard, or Blastoise."
+
     },
     "bp_over_80": {
       "text": "In more evolved Pokémon, blood pressure (BP) can vary depending on whether the Pokemon is sitting or standing. The doctor will measure both. \n",
       "variable": "blood_pressure",
       "choices": [
         {
-          "text": "Measure sitting and standing blood pressure",
+          "text": "Save sitting and standing blood pressure",
           "next": "bp"
         }
       ]
@@ -73,7 +75,7 @@
       ]
     },
     "bp": {
-      "text": "The results came back with a systolic blood pressure reading of <XXX> mm Hg, indicating your Pokemón has high blood pressure (hypertension). To explore the treatment options, we will dive into recent experiences and medical history. \n",
+      "text": "Your Pokemón has high blood pressure (hypertension). To explore the treatment options, we will dive into recent experiences and medical history. \n",
       "choices": [
         {
           "text": "Next",
@@ -185,18 +187,19 @@
         "text": "How old is your Pokémon (what evolutionary stage is it at)? Age can affect how the doctor chooses to measure vital signs. \n",
         "choices": [
         {
-          "text": "Pre-evolved - Pikachu, Charmander, or Squirtle",
+          "text": "Pre-evolved",
           "next": "age_under_40"
         },
         {
-          "text": "Stage 1 - Raichu, Charmeleon, or Wartortle\n",
+          "text": "Stage 1",
           "next": "age_over_40"
         },
         {
-          "text": "Stage 2 - Raichu+, Charizard, or Blastoise \n",
+          "text": "Stage 2\n",
           "next": "age_over_40"
         }
-      ]
+      ],
+       "info": "Pre-evolved - Pikachu, Charmander, or Squirtle.\n\nStage 1 - Raichu, Charmeleon, or Wartortle.\n\n Stage 2 - Raichu+, Charizard, or Blastoise."
     },
     "age_under_40": {
       "text": "As you reported, your Pokémon is in an early evolution. In young Pokémons, hypertension might signal underlying physiological issues. The doctor will now conduct MRI and lab tests to uncover any issues with their kidney and heart function.\n",

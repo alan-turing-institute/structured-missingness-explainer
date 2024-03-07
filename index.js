@@ -206,7 +206,9 @@ function createModalElement(storyPart, button) {
     modalClose.className = "modal-close is-large";
     modalClose.setAttribute('aria-label', 'close');
     modalClose.addEventListener('click', () => {
+        currentStoryPart = 'start';
         modal.remove();
+        window.location.reload();
     });
     modal.appendChild(modalClose);
     return modal;
