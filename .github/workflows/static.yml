@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build TypeScript application
-        run: npm run build  # Adjust the build script according to your project setup
+        run: npx tsc  # Adjust the build script according to your project setup
 
       - name: Deploy to GitHub Pages
         id: deployment
