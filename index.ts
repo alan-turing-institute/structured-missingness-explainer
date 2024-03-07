@@ -20,7 +20,7 @@ interface IStory {
 
 interface IStoryData {
     story: IStory;
-    // Include other properties of the JSON document as needed
+    // Include other properties of the JSON document as needed.
 }
 
 // To store user data
