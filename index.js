@@ -1,15 +1,5 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 // Initialise values
-let userData = {};
 let userCollectedData = {};
 let currentStoryPart = 'start';
 // TODO: Change this, this is ugly and hard-coded and will not work in the long run!!!
@@ -19,14 +9,12 @@ let userChoices = [];
 for (let i = 0; i < 11; i++) {
     userChoices.push(Math.random() >= 0.5);
 }
-function fetchStory() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch('data/demo_scenarios_pokemon.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return yield response.json();
-    });
+async function fetchStory() {
+    const response = await fetch('data/demo_scenarios_pokemon.json');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return await response.json();
 }
 function createBloodPressureElement() {
     const progress = document.createElement('progress');
@@ -123,6 +111,12 @@ function createChoicesElement(storyPart, button) {
                 choiceButton.className = "nes-btn is-primary";
             }
             choiceButton.addEventListener('click', () => {
+                // Save user choices, if present
+                if (choice.data) {
+                    choice.data.forEach((data) => {
+                        userCollectedData[data.variable] = data.value;
+                    });
+                }
                 currentStoryPart = choice.next;
                 button.click(); // Trigger the next part of the story
             });
@@ -148,7 +142,46 @@ function createAvatars(storyPart, button) {
     });
     return avatarWrapper;
 }
-function createModalElement(storyPart, button) {
+function summariseCollectedData(variables, userCollectedData) {
+    // create a bulma table with elements coloured black and red based on true/false
+    const table = document.createElement('table');
+    table.className = "table is-bordered is-striped is-narrow is-hoverable is-fullwidth";
+    const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
+    const th1 = document.createElement('th');
+    th1.innerText = "Variable";
+    const th2 = document.createElement('th');
+    th2.innerText = "Value";
+    tr.appendChild(th1);
+    tr.appendChild(th2);
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    variables.forEach((x) => {
+        if (x.display) {
+            const tr = document.createElement('tr');
+            const td1 = document.createElement('td');
+            td1.innerText = x.name;
+            const td2 = document.createElement('td');
+            if (userCollectedData[x.id] === undefined) {
+                userCollectedData[x.id] = false;
+            }
+            td2.innerText = userCollectedData[x.id].toString();
+            if (userCollectedData[x.id]) {
+                td2.style.color = "black";
+            }
+            else {
+                td2.style.color = "red";
+            }
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tbody.appendChild(tr);
+        }
+    });
+    table.appendChild(tbody);
+    return table;
+}
+function createModalElement(variables, storyPart, button) {
     const modal = document.createElement('div');
     modal.className = "modal is-active";
     modal.style.fontFamily = "Helvetica, sans-serif";
@@ -168,6 +201,10 @@ function createModalElement(storyPart, button) {
     content.appendChild(text);
     modalContent.appendChild(content);
     modal.appendChild(modalContent);
+    if (storyPart.variable && storyPart.variable == "collected_data") {
+        const dataTable = summariseCollectedData(variables, userCollectedData);
+        content.appendChild(dataTable);
+    }
     // Buttons for next steps
     const buttonWrapper = document.createElement('div');
     buttonWrapper.className = "buttons is-centered";
@@ -196,6 +233,7 @@ function createModalElement(storyPart, button) {
         restartButton.innerText = "Restart";
         restartButton.addEventListener('click', () => {
             currentStoryPart = 'start';
+            userCollectedData = {};
             modal.remove();
             window.location.reload();
         });
@@ -207,6 +245,7 @@ function createModalElement(storyPart, button) {
     modalClose.setAttribute('aria-label', 'close');
     modalClose.addEventListener('click', () => {
         currentStoryPart = 'start';
+        userCollectedData = {};
         modal.remove();
         window.location.reload();
     });
@@ -256,7 +295,7 @@ function createInfoButton(storyPart) {
     });
     return infoButton;
 }
-window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
+window.onload = async () => {
     console.log("Hello, world!");
     const button = document.getElementById('changeTextButton');
     const dataElement = document.getElementById('dataDisplay');
@@ -266,11 +305,11 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
         //button.className = "nes-btn is-primary"
         //restartButton.className = "nes-btn is-error";
         let stepCounter = 1;
-        button.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+        button.addEventListener('click', async () => {
             try {
                 // Fetch the story data, currently from a local JSON file
                 // TODO: from a public GitHub repository
-                const data = yield fetchStory();
+                const data = await fetchStory();
                 // Display the current part of the story
                 const storyPart = data.story[currentStoryPart];
                 if (currentStoryPart === 'start') {
@@ -290,7 +329,7 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
                     dataElement.innerHTML = ''; // clear previous content 
                     if (storyPart.style && storyPart.style == "summary") {
                         // serious style
-                        const modal = createModalElement(storyPart, button);
+                        const modal = createModalElement(data.variables, storyPart, button);
                         dataElement.appendChild(modal);
                     }
                     else {
@@ -314,13 +353,14 @@ window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
             catch (error) {
                 console.error('An error occurred while attempting to fetch the JSON file:', error);
             }
-        }));
+        });
         restartButton.addEventListener('click', () => {
             currentStoryPart = 'start';
+            userCollectedData = {};
             stepCounter = 1;
             button.click(); // Trigger the start of the story
         });
         // Trigger the start of the story
         button.click();
     }
-});
+};

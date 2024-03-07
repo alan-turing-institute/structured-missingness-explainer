@@ -1,4 +1,16 @@
 {
+  "variables": [
+    { "id" : "old", "name": "Age", "display" : false },
+    { "id" : "blood_pressure", "name": "Blood pressure", "display" : true },
+    { "id" : "repeated_blood_pressure", "name": "Repeated blood pressure", "display" : true },
+    { "id" : "diabetes", "name": "Diabetes", "display" : false },
+    { "id" : "MRI", "name": "MRI", "display" : true },
+    { "id" : "lab_tests", "name": "Lab tests", "display" : true },
+    { "id" : "EKG", "name": "EKG", "display" : true },
+    { "id" : "opthalmology_test", "name": "Ophthalmology test", "display" : true },
+    { "id" : "ACEi_treatment", "name": "ACEi treatment", "display" : true },
+    { "id" : "CCB_treatment", "name": "CCB treatment", "display" : true }
+  ],
   "story": {
     "start": {
       "text": "Select a Pokémon to begin your journey:\n",
@@ -32,23 +44,23 @@
         {
           "text": "Pre-evolved",
           "next": "bp_under_80",
-          "data": {
-            "old": false
-          }
+          "data": [
+            { "variable": "old", "value": false}
+          ]
         },
         {
           "text": "Stage 1\n",
           "next": "bp_over_80",
-          "data": {
-            "old": true
-          }
+          "data": [
+            { "variable": "old", "value": true}
+          ]
         },
         {
           "text": "Stage 2\n",
           "next": "bp_over_80",
-          "data": {
-            "old": true
-          }
+          "data": [
+            { "variable": "old", "value": true}
+          ]
         }
       ],
       "info": "Pre-evolved - Pikachu, Charmander, or Squirtle.\n\nStage 1 - Raichu, Charmeleon, or Wartortle.\n\n Stage 2 - Raichu+, Charizard, or Blastoise."
@@ -60,7 +72,10 @@
       "choices": [
         {
           "text": "Save sitting and standing blood pressure",
-          "next": "bp"
+          "next": "bp",
+          "data": [
+            { "variable" : "blood_pressure", "value": true}
+          ]
         }
       ]
     },
@@ -70,7 +85,10 @@
       "choices": [
         {
           "text": "Save blood pressure",
-          "next": "bp"
+          "next": "bp",
+          "data": [
+            { "variable" : "blood_pressure", "value": true}
+          ]
         }
       ]
     },
@@ -116,7 +134,10 @@
       "choices": [
         {
           "text": "Save blood pressure",
-          "next": "bp2"
+          "next": "bp2",
+          "data": [
+            { "variable" : "repeated_blood_pressure", "value": true}
+          ]
         }
       ]
     },
@@ -126,7 +147,10 @@
           "choices": [
             {
               "text": "Save blood pressure",
-              "next": "bp2"
+              "next": "bp2",
+              "data": [
+                { "variable" : "repeated_blood_pressure", "value": true}
+              ]
             }
           ]
         },
@@ -137,7 +161,10 @@
           "choices": [
             {
               "text": "Save blood pressure",
-              "next": "bp2"
+              "next": "bp2",
+              "data": [
+                { "variable" : "repeated_blood_pressure", "value": true}
+              ]
             }
           ]
         },
@@ -155,11 +182,17 @@
       "choices": [
         {
           "text": "Head",
-          "next": "diabetes_yes"
+          "next": "diabetes_yes",
+          "data": [
+            { "variable" : "diabetes", "value": true }
+          ]
         },
         {
           "text": "Tail",
-          "next": "diabetes_no"
+          "next": "diabetes_no",
+          "data": [
+            { "variable" : "diabetes", "value": false}
+          ]
         }
       ],
       "info": "Approximately 10% of people in the UK have diabetes. This animated coin is biased to reflect this probability."
@@ -169,7 +202,10 @@
       "choices": [
         {
           "text": "Treat with ACEi",
-          "next": "end_journey"
+          "next": "end_journey",
+          "data": [
+            { "variable" : "ACEi_treatment", "value": true }
+          ]
         }
       ],
       "info": "Hypertension affects 20-60% of patients with diabetes, and diabetic patients with hypertension are at particularly high risk of complications like heart attacks. Angiotensin Converting Enzyme inhibitors (ACEIs) are the first line of management of diabetic hypertensives." 
@@ -199,14 +235,19 @@
           "next": "age_over_40"
         }
       ],
-       "info": "Pre-evolved - Pikachu, Charmander, or Squirtle.\n\nStage 1 - Raichu, Charmeleon, or Wartortle.\n\n Stage 2 - Raichu+, Charizard, or Blastoise."
+       "info": "Pre-evolved - Pikachu, Charmander, or Squirtle.\n\nStage 1 - Raichu, Charmeleon, or Wartortle.\n\n Stage 2 - Raichu+, Charizard, or Blastoise.",
+       "variable": "age"
     },
     "age_under_40": {
       "text": "As you reported, your Pokémon is in an early evolution. In young Pokémons, hypertension might signal underlying physiological issues. The doctor will now conduct MRI and lab tests to uncover any issues with their kidney and heart function.\n",
       "choices": [
         {
           "text": "Next",
-          "next": "diagnosis"
+          "next": "diagnosis",
+          "data" : [
+            { "variable" : "MRI", "value": true },
+            { "variable" : "lab_tests", "value": true }
+          ]
         }
       ]
     },
@@ -233,11 +274,17 @@
       "choices": [
         {
           "text": "Heads",
-          "next": "organ_damage_yes"
+          "next": "organ_damage_yes",
+          "data": [
+            { "variable" : "EKG", "value": true }
+          ]
         },
         {
           "text": "Tails",
-          "next": "organ_damage_no"
+          "next": "organ_damage_no",          
+          "data": [
+            { "variable" : "EKG", "value": true }
+          ]
         }
       ]
     },
@@ -255,11 +302,17 @@
       "choices": [
         {
           "text": "Yes",
-          "next": "ophthalmology_records"
+          "next": "ophthalmology_records",
+          "data": [
+            { "variable" : "opthalmology_test", "value": true}
+          ]
         },
         {
           "text": "No",
-          "next": "ophthalmology_damage_yes"
+          "next": "ophthalmology_damage_yes",
+          "data": [
+            { "variable" : "opthalmology_test", "value": true}
+          ]
         }
       ]
     },
@@ -308,7 +361,10 @@
       "choices": [
         {
           "text": "Treat with CCB",
-          "next": "end_journey"
+          "next": "end_journey",
+          "data": [
+            { "variable" : "CCB_treatment", "value": true }
+          ]
         }
       ],
       "info" : "In humans, clinical studies have shown that hypertensive patients of African or Afro-Caribbean descent respond well to Calcium Channel Blockers (CCBs) and this is recommended as initial treatment for newly diagnosed patients."
@@ -318,7 +374,10 @@
       "choices": [
         {
           "text": "Treat with ACEi or ARB",
-          "next": "end_journey"
+          "next": "end_journey",
+          "data": [
+            { "variable" : "ACEi_treatment", "value": true }
+          ]
         }
       ],
       "info": "In humans, clinical studies have shown that ACE inhibitors and ARBs are effective in patients of non-African and non-Afro-Caribbean descent."
@@ -352,7 +411,8 @@
         }
       ],
       "title": "Collected data",
-      "style": "summary"
+      "style": "summary",
+      "variable": "collected_data"
     },
     "structured_missingness": {
       "text": "“Structured missingness” happens when your data is combined with other data to form distinct structures, or blocks, of missingness across variables and patients. Here you can see the structured missingness in the biobank data, formed by combining your Pokémon’s medical records with those of other Pokémon who participated in this clinical journey. \n\nAn example of structured missingness is how older Pokémon of a certain age are always likely to be missing certain diagnostic assessments like MRIs and labs, or how diabetic Pokémon will proceed immediately to treatment and skip all other clinical examinations. Therefore, missingness is causally related across multiple missing variables. \n\nStructured missingness makes it challenging to analyze the data as a whole. \n",

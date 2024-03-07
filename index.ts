@@ -1,8 +1,14 @@
 
 
+interface IData {
+    variable: string;
+    value: boolean;
+}
+
 interface IChoice {
     text: string;
     next: string;
+    data?: IData[];
 }
 
 interface IStoryPart {
@@ -18,31 +24,23 @@ interface IStory {
     [key: string]: IStoryPart;
 }
 
+interface IVariable {
+    id : string,
+    name: string,
+    display: boolean
+}
+
 interface IStoryData {
     story: IStory;
-    // Include other properties of the JSON document as needed
+    variables: IVariable[]; // names of variables to be collected
 }
 
-// To store user data
-interface IUser {
-    age?: number;
-    bloodPressure?: number;
-}
-
+// To store user data - can be indexed by a string (name of variable)
 interface IUserCollectedData {
-    bloodPressure? : boolean;
-    repeatedBloodPressure? : boolean;
-    MRI? : boolean;
-    EKG? : boolean;
-    labChemistryTest? : boolean;
-    opthalmologyTest? : boolean;
-    ACEInhibitorTreatment? : boolean;
-    calciumChannelBlockerTreatment? : boolean;
+    [key: string]: boolean ;
 }
-
 
 // Initialise values
-let userData: IUser = {};
 let userCollectedData: IUserCollectedData = {};
 let currentStoryPart = 'start';
 
@@ -84,7 +82,6 @@ function createBloodPressureElement(): HTMLElement {
     button.innerText = "Take measurement";
     button.addEventListener('click', () => {
         clearInterval(animate);
-
 
         const dialog = document.createElement('dialog');
         dialog.className = "nes-dialog";
@@ -169,7 +166,7 @@ function createChoicesElement(storyPart: IStoryPart, button: HTMLElement): HTMLE
     buttonWrapper.className = "buttons is-centered";
 
     if (storyPart.choices) {
-        storyPart.choices.forEach((choice: { text: string, next: string }) => {
+        storyPart.choices.forEach((choice: IChoice) => {
             const choiceButton = document.createElement('button');
             choiceButton.innerText = choice.text;
             if (storyPart.style && storyPart.style == "summary") {
@@ -178,6 +175,14 @@ function createChoicesElement(storyPart: IStoryPart, button: HTMLElement): HTMLE
                 choiceButton.className = "nes-btn is-primary";
             }
             choiceButton.addEventListener('click', () => {
+
+                // Save user choices, if present
+                if (choice.data) {
+                    choice.data.forEach((data: IData) => {
+                        userCollectedData[data.variable] = data.value;
+                    });
+                }
+
                 currentStoryPart = choice.next;
                 button.click(); // Trigger the next part of the story
             });
@@ -207,7 +212,49 @@ function createAvatars(storyPart: IStoryPart, button:HTMLElement): HTMLElement {
     return avatarWrapper;
 }
 
-function createModalElement(storyPart: IStoryPart, button: HTMLElement): HTMLElement {
+function summariseCollectedData(variables: IVariable[], userCollectedData: IUserCollectedData): HTMLElement {   
+    // create a bulma table with elements coloured black and red based on true/false
+    const table = document.createElement('table');
+    table.className = "table is-bordered is-striped is-narrow is-hoverable is-fullwidth";
+    const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
+    const th1 = document.createElement('th');
+    th1.innerText = "Variable";
+    const th2 = document.createElement('th');
+    th2.innerText = "Value";
+    tr.appendChild(th1);
+    tr.appendChild(th2);
+    thead.appendChild(tr);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    variables.forEach((x: IVariable) => {
+        if (x.display) {
+            const tr = document.createElement('tr');
+            const td1 = document.createElement('td');
+            td1.innerText = x.name;
+            const td2 = document.createElement('td');
+            if (userCollectedData[x.id] === undefined) {
+                userCollectedData[x.id] = false;
+            }
+            td2.innerText = userCollectedData[x.id].toString();
+            if (userCollectedData[x.id]) {
+                td2.style.color = "black";
+            } else {
+                td2.style.color = "red";
+            }
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tbody.appendChild(tr);
+        }
+    });
+
+    table.appendChild(tbody);
+
+    return table;
+}
+
+function createModalElement(variables: IVariable[], storyPart: IStoryPart, button: HTMLElement): HTMLElement {
     const modal = document.createElement('div');
     modal.className = "modal is-active";
     modal.style.fontFamily = "Helvetica, sans-serif";
@@ -233,6 +280,11 @@ function createModalElement(storyPart: IStoryPart, button: HTMLElement): HTMLEle
 
     modalContent.appendChild(content);
     modal.appendChild(modalContent);
+
+    if (storyPart.variable && storyPart.variable == "collected_data") {
+        const dataTable = summariseCollectedData(variables, userCollectedData);
+        content.appendChild(dataTable);
+    }
 
     // Buttons for next steps
     const buttonWrapper = document.createElement('div');
@@ -261,6 +313,7 @@ function createModalElement(storyPart: IStoryPart, button: HTMLElement): HTMLEle
         restartButton.innerText = "Restart";
         restartButton.addEventListener('click', () => {
             currentStoryPart = 'start';
+            userCollectedData = {};
             modal.remove();
             window.location.reload();
 
@@ -275,6 +328,7 @@ function createModalElement(storyPart: IStoryPart, button: HTMLElement): HTMLEle
     modalClose.setAttribute('aria-label', 'close');
     modalClose.addEventListener('click', () => {
             currentStoryPart = 'start';
+            userCollectedData = {};
             modal.remove();
             window.location.reload();
     });
@@ -380,7 +434,7 @@ window.onload = async () => {
 
                     if (storyPart.style && storyPart.style == "summary") {
                         // serious style
-                        const modal = createModalElement(storyPart, button);
+                        const modal = createModalElement(data.variables, storyPart, button);
                         dataElement.appendChild(modal);
                     } else {
 
@@ -411,6 +465,7 @@ window.onload = async () => {
 
         restartButton.addEventListener('click', () => {
             currentStoryPart = 'start';
+            userCollectedData = {};
             stepCounter = 1;
             button.click(); // Trigger the start of the story
         });
