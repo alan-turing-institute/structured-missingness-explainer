@@ -6,7 +6,7 @@ on:
       - gh-pages  # Change this to the branch you want to deploy from
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
