@@ -36,10 +36,11 @@
           "text": "Next",
           "next": "clinic"
         }
-      ]
+      ],
+      "image" : "img/hospital.png"
     },
     "clinic": {
-      "text": "The doctor would like to take some basic vital signs. How old is your Pokémon (what evolutionary stage is it at)? Age can affect how the doctor chooses to measure vital signs. \n",
+      "text": "The doctor would like to take some basic vital signs. How old is your Pokémon (what evolutionary stage is it at)? Age can affect how we measure vital signs. \n",
       "choices": [
         {
           "text": "Pre-evolved",
@@ -93,13 +94,14 @@
       ]
     },
     "bp": {
-      "text": "Your Pokemón has high blood pressure (hypertension). To explore the treatment options, we will dive into recent experiences and medical history. \n",
+      "text": "Your Pokemón has high blood pressure (hypertension). Let's dive into recent experiences and medical history to explore treatments. \n",
       "choices": [
         {
           "text": "Next",
           "next": "coffee"
         }
-      ]
+      ],
+      "image": "img/chart-increasing.png"
     },
     "coffee": {
       "text": "How many coffees or caffeinated beverages has your Pokemón had today? \u2028\u2028\n",
@@ -113,7 +115,8 @@
           "text": "More than 3",
           "next": "coffee_yes"
         }
-      ]
+      ],
+      "image" : "img/coffee.png"
     },
     "conference_arrival": {
       "text": "Is your Pokemón out of breath? How did they get to the conference today? \n",
@@ -126,7 +129,8 @@
           "text": "Public transport or carried by you in their Poké Ball\n",
           "next": "exercise_no"
         }
-      ]
+      ],
+      "image": "img/person-running.png"
     },
     "exercise_no": {
       "text": "Let’s take your Pokémon’s blood pressure one more time. \n",
@@ -142,7 +146,7 @@
       ]
     },
       "coffee_yes":{
-          "text": "Recent caffeine might explain a higher BP reading. In this case, the doctor will see your Pokémon for a second blood pressure read later in the day.\n",
+          "text": "Recent caffeine might explain a higher BP reading. Let's do a second blood pressure read later in the day.\n",
           "variable": "blood_pressure",
           "choices": [
             {
@@ -156,7 +160,7 @@
         },
         "exercise":
         {
-          "text": "Recent exercise might explain a higher BP reading. In this case, the doctor will see your Pokémon for a second blood pressure read later in the day.\n",
+          "text": "Recent exercise might explain a higher BP reading. Let's do a second blood pressure read later in the day.\n",
           "variable": "blood_pressure",
           "choices": [
             {
@@ -175,10 +179,11 @@
           "text": "Next",
           "next": "diabetes"
         }
-      ]
+      ],
+      "image": "img/chart-increasing.png"
     },
     "diabetes": {
-      "text": "Now that we've checked those environmental factors, let's go through some medical history. Is your Pokémon diabetic?\n Knowing any history of diabetes is crucial because it can influence the management of your hypertension. Flip a coin. ",
+      "text": "After environmental factors, let's check your medical history. Is your Pokémon diabetic?\n Knowing any history of diabetes can influence the management of your hypertension. Flip a coin. ",
       "choices": [
         {
           "text": "Head",
@@ -198,7 +203,7 @@
       "info": "Approximately 10% of people in the UK have diabetes. This animated coin is biased to reflect this probability."
     },
     "diabetes_yes": {
-      "text": "Based on the coin flip, your Pokémon is diabetic and therefore is at increased risk of complications from hypertension. Your best option is to begin treatment right away with ACE inhibitors. \n",
+      "text": "Based on the coin flip, your Pokémon is diabetic and at increased risk of complications from hypertension. Let's begin treatment right away with ACE inhibitors. \n",
       "choices": [
         {
           "text": "Treat with ACEi",
@@ -239,7 +244,7 @@
        "variable": "age"
     },
     "age_under_40": {
-      "text": "As you reported, your Pokémon is in an early evolution. In young Pokémons, hypertension might signal underlying physiological issues. The doctor will now conduct MRI and lab tests to uncover any issues with their kidney and heart function.\n",
+      "text": "In young Pokémons, hypertension might signal underlying physiological issues. Let's conduct MRI and lab tests to check their kidney and heart function.\n",
       "choices": [
         {
           "text": "Next",
@@ -249,7 +254,8 @@
             { "variable" : "lab_tests", "value": true }
           ]
         }
-      ]
+      ],
+      "image": "img/mri.png"
     },
     "diagnosis": {
       "text": "Thankfully, everything is normal and these tests confirm a diagnosis of primary hypertension, which does not have a clear underlying cause but could be influenced by genetic, lifestyle, and environmental factors.\n",
@@ -258,16 +264,18 @@
           "text": "Next",
           "next": "organ_damage"
         }
-      ]
+      ],
+      "image": "img/french-fries.png"
     },
     "age_over_40": {
-      "text": "As you reported, your Pokémon is in a later evolution. In older Pokémon, primary hypertension is a more common diagnosis, which does not have a clear underlying cause but could be influenced by genetic, lifestyle, and environmental factors.\n",
+      "text": "In older Pokémon, primary hypertension is a more common diagnosis, which could be influenced by genetic, lifestyle, and environmental factors.\n",
       "choices": [
         {
           "text": "Next",
           "next": "organ_damage"
         }
-      ]
+      ],
+      "image": "img/french-fries.png"
     },
     "organ_damage": {
       "text": "It's now important to check for any damage to your Pokémon’s organs that might have been caused by elevated blood pressure levels. Click \"Next\" to proceed through tests including echocardiograms and additional labs. Flip a coin to reveal the test results. \n \uD83E\uDE99.",
@@ -295,7 +303,8 @@
           "text": "Next",
           "next": "ophthalmology"
         }
-      ]
+      ],
+      "image": "img/heart-full.png"
     },
     "ophthalmology": {
       "text": "As one last check, we'll look for signs of hypertensive eye disease. \n\nHave they had a recent eye test or ophthalmology examination? \n",
@@ -314,7 +323,8 @@
             { "variable" : "opthalmology_test", "value": true}
           ]
         }
-      ]
+      ],
+      "image":"img/glasses.png"
     },
     "ophthalmology_records": {
       "text": "Let's pull up their medical records.\nNo sign of hypertensive eye disease was found on their recent exam.\u2028 Their early diagnosis indicates that regular BP monitoring over the next several weeks and lifestyle management may be a good approach going forward. \n",
@@ -332,7 +342,8 @@
           "text": "Next",
           "next": "organ_damage_yes"
         }
-      ]
+      ],
+      "image": "img/glasses.png"
     },
     "organ_damage_yes": {
       "text": "Because of damage to parts of your Pokémon’s body, they are at risk of health complications and should undergo treatment right away to manage their hypertension effectively. \n",
@@ -341,7 +352,8 @@
           "text": "Treat right away",
           "next": "ancestry"
         }
-      ]
+      ],
+      "image": "img/heart-empty.png"
     },
     "ancestry": {
       "text": "Pokémon with certain ancestry backgrounds tend to respond differently to certain antihypertensive medications.\n",

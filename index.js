@@ -84,6 +84,18 @@ function createCardElement(storyPart, stepCounter) {
         const bloodPressureElement = createBloodPressureElement();
         content.appendChild(bloodPressureElement);
     }
+    if (storyPart.image) {
+        const imageWrapper = document.createElement('div');
+        imageWrapper.style.display = 'flex';
+        imageWrapper.style.justifyContent = 'center';
+        imageWrapper.style.alignItems = 'center';
+        const image = document.createElement('img');
+        image.src = storyPart.image;
+        image.style.width = "200px";
+        image.style.height = "auto";
+        imageWrapper.appendChild(image);
+        content.appendChild(imageWrapper);
+    }
     card.appendChild(content);
     // if storyPart.text contains "Flip a coin", add a coin icon
     if (storyPart.text.includes("Flip a coin")) {

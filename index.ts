@@ -18,6 +18,7 @@ interface IStoryPart {
     info?: string; // contents of the info box
     style?: string; // summary or game
     title?: string;
+    image?: string;
 }
 
 interface IStory {
@@ -141,6 +142,21 @@ function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElem
         // create an animated slider for blood pressure measurement
         const bloodPressureElement = createBloodPressureElement();
         content.appendChild(bloodPressureElement);   
+    }
+
+    if (storyPart.image) {
+        const imageWrapper = document.createElement('div');
+        imageWrapper.style.display = 'flex';
+        imageWrapper.style.justifyContent = 'center';
+        imageWrapper.style.alignItems = 'center';
+    
+        const image = document.createElement('img');
+        image.src = storyPart.image;
+        image.style.width = "200px";
+        image.style.height = "auto";
+    
+        imageWrapper.appendChild(image);
+        content.appendChild(imageWrapper);
     }
 
     card.appendChild(content);
