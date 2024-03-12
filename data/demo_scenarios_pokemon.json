@@ -278,11 +278,11 @@
       "image": "img/french-fries.png"
     },
     "organ_damage": {
-      "text": "It's now important to check for any damage to your Pokémon’s organs that might have been caused by elevated blood pressure levels. Click \"Next\" to proceed through tests including echocardiograms and additional labs. Flip a coin to reveal the test results. \n \uD83E\uDE99.",
+      "text": "Let's check for any damage to your Pokémon’s organs that might have been caused by elevated blood pressure. Flip a coin to reveal the test results of echocardiograms and additional labs.",
       "choices": [
         {
           "text": "Heads",
-          "next": "organ_damage_yes",
+          "next": "organ_damage_yes1",
           "data": [
             { "variable" : "EKG", "value": true }
           ]
@@ -301,13 +301,37 @@
       "choices": [
         {
           "text": "Next",
-          "next": "ophthalmology"
+          "next": "ophthalmology1"
         }
       ],
       "image": "img/heart-full.png"
     },
-    "ophthalmology": {
-      "text": "As one last check, we'll look for signs of hypertensive eye disease. \n\nHave they had a recent eye test or ophthalmology examination? \n",
+    "organ_damage_yes1" : {
+      "text": "The coin flip indicates damage to some of your Pokémon's organ systems.\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "organ_damage_yes"
+        }
+      ],
+      "image": "img/heart-empty.png"
+    },
+    "ophthalmology1": {
+      "text":"As one last check, we'll look for signs of hypertensive eye disease. Does your Pokémon wear glasses or contacts? \n",
+      "choices": [
+        {
+          "text": "Yes",
+          "next": "ophthalmology2"
+        },
+        {
+          "text": "No",
+          "next": "ophthalmology2"
+        }
+      ],
+      "image":"img/glasses.png"
+    },
+    "ophthalmology2": {
+      "text": "Have they had a recent eye test or ophthalmology examination? \n",
       "choices": [
         {
           "text": "Yes",
@@ -330,20 +354,21 @@
       "text": "Let's pull up their medical records.\nNo sign of hypertensive eye disease was found on their recent exam.\u2028 Their early diagnosis indicates that regular BP monitoring over the next several weeks and lifestyle management may be a good approach going forward. \n",
       "choices": [
         {
-          "text": "Next.",
+          "text": "Next",
           "next": "end_journey"
         }
-      ]
+      ],
+      "image": "img/apple.png"
     },
     "ophthalmology_damage_yes": {
-      "text": "The doctor performed an eye examination and it revealed signs of ocular damage caused by high blood pressure. Click \"Next.\"\n",
+      "text": "The doctor performed an eye examination and it revealed signs of ocular damage caused by high blood pressure. \n",
       "choices": [
         {
           "text": "Next",
           "next": "organ_damage_yes"
         }
       ],
-      "image": "img/glasses.png"
+      "image": "img/eye.png"
     },
     "organ_damage_yes": {
       "text": "Because of damage to parts of your Pokémon’s body, they are at risk of health complications and should undergo treatment right away to manage their hypertension effectively. \n",
@@ -353,7 +378,7 @@
           "next": "ancestry"
         }
       ],
-      "image": "img/heart-empty.png"
+      "image": "img/pill.png"
     },
     "ancestry": {
       "text": "Pokémon with certain ancestry backgrounds tend to respond differently to certain antihypertensive medications.\n",
@@ -379,7 +404,8 @@
           ]
         }
       ],
-      "info" : "In humans, clinical studies have shown that hypertensive patients of African or Afro-Caribbean descent respond well to Calcium Channel Blockers (CCBs) and this is recommended as initial treatment for newly diagnosed patients."
+      "info" : "In humans, clinical studies have shown that hypertensive patients of African or Afro-Caribbean descent respond well to Calcium Channel Blockers (CCBs) and this is recommended as initial treatment for newly diagnosed patients.",
+      "image": "img/pill_apple.png"
     },
     "afrocaribean_ancestry_no": {
       "text": "Fire or electric type Pokémon like Charmander and Pikachu typically respond well to initial treatment with ACE inhibitors or Angiotensin II Receptor Blockers (ARBs) and this is recommended alongside lifestyle modifications. \n",
@@ -392,7 +418,8 @@
           ]
         }
       ],
-      "info": "In humans, clinical studies have shown that ACE inhibitors and ARBs are effective in patients of non-African and non-Afro-Caribbean descent."
+      "info": "In humans, clinical studies have shown that ACE inhibitors and ARBs are effective in patients of non-African and non-Afro-Caribbean descent.",
+      "image": "img/pill_apple.png"
     },
     "end_journey": {
       "text": "Your Pokémon’s clinical journey ends here. \n\nThank you for taking part. Click “Next” to see how this data might be used in the real-world.\n",
