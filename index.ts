@@ -11,6 +11,11 @@ interface IChoice {
     data?: IData[];
 }
 
+interface IPaper {
+    name: string;
+    qr : string;
+}
+
 interface IStoryPart {
     variable?: string;
     text: string;
@@ -19,6 +24,7 @@ interface IStoryPart {
     style?: string; // summary or game
     title?: string;
     image?: string;
+    papers?: IPaper[];
 }
 
 interface IStory {
@@ -329,6 +335,25 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
     
         imageWrapper.appendChild(image);
         content.appendChild(imageWrapper);
+    }
+
+    if (storyPart.papers) {
+        const paperWrapper = document.createElement('div');
+
+        storyPart.papers.forEach((paper : IPaper) => {
+            const qr = document.createElement('img');
+            qr.src = paper.qr;
+            qr.style.width = "auto";
+            qr.style.height = "auto";
+
+            const name = document.createElement('h3');
+            name.innerText = paper.name;
+
+            paperWrapper.appendChild(name);
+            paperWrapper.appendChild(qr);
+        })
+
+        content.appendChild(paperWrapper);
     }
 
 

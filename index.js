@@ -242,6 +242,20 @@ function createModalElement(variables, storyPart, button) {
         imageWrapper.appendChild(image);
         content.appendChild(imageWrapper);
     }
+    if (storyPart.papers) {
+        const paperWrapper = document.createElement('div');
+        storyPart.papers.forEach((paper) => {
+            const qr = document.createElement('img');
+            qr.src = paper.qr;
+            qr.style.width = "auto";
+            qr.style.height = "auto";
+            const name = document.createElement('h3');
+            name.innerText = paper.name;
+            paperWrapper.appendChild(name);
+            paperWrapper.appendChild(qr);
+        });
+        content.appendChild(paperWrapper);
+    }
     // Buttons for next steps
     const buttonWrapper = document.createElement('div');
     buttonWrapper.className = "buttons is-centered";
