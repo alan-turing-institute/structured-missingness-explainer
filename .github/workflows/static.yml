@@ -32,8 +32,8 @@ jobs:
           npm install --save-dev typescript
           npm install
 
-      - name: Build TypeScript application
-        run: npx tsc  # Adjust the build script according to your project setup
+        #- name: Build TypeScript application
+        #run: npx tsc  # Adjust the build script according to your project setup
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
