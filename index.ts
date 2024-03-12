@@ -264,13 +264,14 @@ function summariseCollectedData(variables: IVariable[], userCollectedData: IUser
             const td2 = document.createElement('td');
             if (userCollectedData[x.id] === undefined) {
                 userCollectedData[x.id] = false;
-            }
-            td2.innerText = userCollectedData[x.id].toString();
-            if (userCollectedData[x.id]) {
-                td2.style.color = "black";
-            } else {
-                td2.style.color = "red";
-            }
+            }            
+            //td2.innerText = userCollectedData[x.id].toString();
+            td2.innerText = (userCollectedData[x.id]) ? "✅" : "❌";
+            // if (userCollectedData[x.id]) {
+            //     td2.style.color = "black";
+            // } else {
+            //     td2.style.color = "red";
+            // }
             tr.appendChild(td1);
             tr.appendChild(td2);
             tbody.appendChild(tr);
@@ -284,7 +285,7 @@ function summariseCollectedData(variables: IVariable[], userCollectedData: IUser
 
 function createModalElement(variables: IVariable[], storyPart: IStoryPart, button: HTMLElement): HTMLElement {
     const modal = document.createElement('div');
-    modal.className = "modal is-active";
+    modal.className = "modal is-active is-large";
     modal.style.fontFamily = "Helvetica, sans-serif";
 
     const modalBackground = document.createElement('div');
@@ -292,7 +293,8 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
     modal.appendChild(modalBackground);
 
     const modalContent = document.createElement('div');
-    modalContent.className = "modal-content";
+    modalContent.className = "modal-content is-large";
+    modalContent.style.width = "800px";
 
     const content = document.createElement('div');
     content.className = "box";
@@ -313,6 +315,22 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
         const dataTable = summariseCollectedData(variables, userCollectedData);
         content.appendChild(dataTable);
     }
+
+    if (storyPart.image) {
+        const imageWrapper = document.createElement('div');
+        imageWrapper.style.display = 'flex';
+        imageWrapper.style.justifyContent = 'center';
+        imageWrapper.style.alignItems = 'center';
+    
+        const image = document.createElement('img');
+        image.src = storyPart.image;
+        image.style.width = "640px";
+        image.style.height = "auto";
+    
+        imageWrapper.appendChild(image);
+        content.appendChild(imageWrapper);
+    }
+
 
     // Buttons for next steps
     const buttonWrapper = document.createElement('div');
