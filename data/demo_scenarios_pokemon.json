@@ -88,7 +88,7 @@
           "text": "Save blood pressure",
           "next": "bp",
           "data": [
-            { "variable" : "blood_pressure", "value": true}
+            { "variable" : "blood_pressure", "value": false}
           ]
         }
       ]
@@ -462,12 +462,22 @@
         }
       ],
       "title": "Structured missingness",
-      "style": "summary"
+      "style": "summary",
+      "image": "img/structured_missingness.png"
     },
     "end": {
       "text": "Researchers at the Turing Institute and Roche are jointly working to better detect and resolve structured missingness in large, multi-modal health databases like the fictional biobank described in this demo. \n\nOne project is using graphical methods like “networks” and “hypergraphs” to visualise and unravel the hidden structure of missing data in complex datasets.\n\nAnother project is developing new mathematical theory to explain and find a solution to structured missing data.\n\nScan the QR codes below to read the latest publications and outputs in this area from the Turing-Roche Partnership\n",
       "style": "summary",
-      "title": "Turing - Roche research partnership"
+      "title": "Turing - Roche research partnership",
+      "image": "img/logos.png",
+      "papers": [ {
+        "name" : "Learning from data with Structured Missingness- Nature Machine Intelligence Paper",
+        "qr" : "img/qr-nature.png"
+      }, {
+        "name": "A Complete Characterisation of Structured Missingness- arXiv Preprint",
+        "qr" : "img/qr-arxiv.png"
+      }
+      ]
     }
   }
 }
