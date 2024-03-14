@@ -229,7 +229,7 @@ function createChoicesElement(storyPart: IStoryPart, button: HTMLElement): HTMLE
 function createAvatars(storyPart: IStoryPart, button:HTMLElement): HTMLElement {
     const avatarWrapper = document.createElement('div');
 
-    const avatars = ["bulbasaur", "charmander", "kirby"];
+    const avatars = ["bulbasaur", "charmander", "squirtle"];
     avatars.forEach((avatar: string) => {
         const avatarElement = document.createElement('i');
         avatarElement.className = "nes-" + avatar;
@@ -379,7 +379,7 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
     } else {
         // restart button
         const restartButton = document.createElement('button');
-        restartButton.className = "nes-btn";
+        restartButton.className = "button is-danger";
         restartButton.type = "button";
         restartButton.innerText = "Restart";
         restartButton.addEventListener('click', () => {
@@ -392,7 +392,7 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
         buttonWrapper.appendChild(restartButton);
     }
 
-    modalContent.appendChild(buttonWrapper);
+    content.appendChild(buttonWrapper);
     
     const modalClose = document.createElement('button');
     modalClose.className = "modal-close is-large";
