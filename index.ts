@@ -97,7 +97,7 @@ function createBloodPressureElement(): HTMLElement {
         form.method = "dialog";
         const title = document.createElement('p');
         title.className = "title";
-        title.innerText = "Your blood pressure is: " + progress.value;
+        title.innerText = "Your systolic blood pressure is: " + progress.value;
         form.appendChild(title);
         const menu = document.createElement('menu');
         menu.className = "dialog-menu";
@@ -366,7 +366,7 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
             const choiceButton = document.createElement('button');
             choiceButton.innerText = choice.text;
             if (storyPart.style && storyPart.style == "summary") {
-                choiceButton.className = "button is-primary";
+                choiceButton.className = "button is-primary is-large";
             } else {
                 choiceButton.className = "nes-btn is-primary";
             }
@@ -379,7 +379,7 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
     } else {
         // restart button
         const restartButton = document.createElement('button');
-        restartButton.className = "button is-danger";
+        restartButton.className = "button is-danger is-large";
         restartButton.type = "button";
         restartButton.innerText = "Restart";
         restartButton.addEventListener('click', () => {
