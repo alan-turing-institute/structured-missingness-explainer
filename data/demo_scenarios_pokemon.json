@@ -1,0 +1,483 @@
+{
+  "variables": [
+    { "id" : "old", "name": "Age", "display" : false },
+    { "id" : "blood_pressure", "name": "Sitting and standing blood pressure", "display" : true },
+    { "id" : "repeated_blood_pressure", "name": "Sequence of repeated blood pressure measurements", "display" : true },
+    { "id" : "diabetes", "name": "Diabetes", "display" : false },
+    { "id" : "MRI", "name": "MRI scan", "display" : true },
+    { "id" : "lab_tests", "name": "Lab chemistry tests", "display" : true },
+    { "id" : "EKG", "name": "EKG", "display" : true },
+    { "id" : "opthalmology_test", "name": "Ophthalmology exam", "display" : true },
+    { "id" : "ACEi_treatment", "name": "ACE inhibitor treatment", "display" : true },
+    { "id" : "CCB_treatment", "name": "Calcium channel blockers treatment", "display" : true }
+  ],
+  "story": {
+    "start": {
+      "text": "Select a Pokémon to begin your journey:\n",
+      "choices": [
+        {
+          "text": "Man",
+          "next": "symptoms"
+        },
+        {
+          "text": "Woman",
+          "next": "symptoms"
+        },
+        {
+          "text": "Other",
+          "next": "symptoms"
+        }
+      ]
+    },
+    "symptoms": {
+      "text": "Your Pokémon has been feeling unwell recently, nursing a mild headache with some dizziness and fatigue. It's time to visit the clinic to understand what's going on. Click \"Next\" to proceed to the clinic.\n\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "clinic"
+        }
+      ],
+      "image" : "img/hospital.png"
+    },
+    "clinic": {
+      "text": "The doctor would like to take some basic vital signs. How old is your Pokémon (what evolutionary stage is it at)? Age can affect how we measure vital signs. \n",
+      "choices": [
+        {
+          "text": "Pre-evolved",
+          "next": "bp_under_80",
+          "data": [
+            { "variable": "old", "value": false}
+          ]
+        },
+        {
+          "text": "Stage 1\n",
+          "next": "bp_over_80",
+          "data": [
+            { "variable": "old", "value": true}
+          ]
+        },
+        {
+          "text": "Stage 2\n",
+          "next": "bp_over_80",
+          "data": [
+            { "variable": "old", "value": true}
+          ]
+        }
+      ],
+      "info": "Pre-evolved - Bulbasaur, Charmander, or Squirtle.\n\nStage 1 - Ivysaur, Charmeleon, or Wartortle.\n\n Stage 2 - Venusaur, Charizard, or Blastoise."
+
+    },
+    "bp_over_80": {
+      "text": "In more evolved Pokémon, blood pressure (BP) can vary depending on whether the Pokemon is sitting or standing. The doctor will measure both. \n",
+      "variable": "blood_pressure",
+      "choices": [
+        {
+          "text": "Save sitting and standing blood pressure",
+          "next": "bp",
+          "data": [
+            { "variable" : "blood_pressure", "value": true}
+          ]
+        }
+      ]
+    },
+    "bp_under_80": {
+      "text": "At the clinic, the doctor will measure your Pokémon’s blood pressure.\n",
+      "variable": "blood_pressure",
+      "choices": [
+        {
+          "text": "Save blood pressure",
+          "next": "bp",
+          "data": [
+            { "variable" : "blood_pressure", "value": false}
+          ]
+        }
+      ]
+    },
+    "bp": {
+      "text": "Your Pokemón has high blood pressure (hypertension). Let's dive into recent experiences and medical history to explore treatments. \n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "coffee"
+        }
+      ],
+      "image": "img/chart-increasing.png"
+    },
+    "coffee": {
+      "text": "How many coffees or caffeinated beverages has your Pokemón had today? \u2028\u2028\n",
+      "choices": [
+        {
+          "text": "Less than 3",
+          "next": "conference_arrival"
+
+        },
+        {
+          "text": "More than 3",
+          "next": "coffee_yes"
+        }
+      ],
+      "image" : "img/coffee.png"
+    },
+    "conference_arrival": {
+      "text": "Is your Pokemón out of breath? How did they get to the conference today? \n",
+      "choices": [
+        {
+          "text": "Walked, ran or flew\n",
+          "next": "exercise"
+        },
+        {
+          "text": "Public transport or carried by you in their Poké Ball\n",
+          "next": "exercise_no"
+        }
+      ],
+      "image": "img/person-running.png"
+    },
+    "exercise_no": {
+      "text": "Let’s take your Pokémon’s blood pressure one more time. \n",
+      "variable": "blood_pressure",
+      "choices": [
+        {
+          "text": "Save blood pressure",
+          "next": "bp2",
+          "data": [
+            { "variable" : "repeated_blood_pressure", "value": true}
+          ]
+        }
+      ]
+    },
+      "coffee_yes":{
+          "text": "Recent caffeine might explain a higher BP reading. Let's do a second blood pressure read later in the day.\n",
+          "variable": "blood_pressure",
+          "choices": [
+            {
+              "text": "Save blood pressure",
+              "next": "bp2",
+              "data": [
+                { "variable" : "repeated_blood_pressure", "value": true}
+              ]
+            }
+          ]
+        },
+        "exercise":
+        {
+          "text": "Recent exercise might explain a higher BP reading. Let's do a second blood pressure read later in the day.\n",
+          "variable": "blood_pressure",
+          "choices": [
+            {
+              "text": "Save blood pressure",
+              "next": "bp2",
+              "data": [
+                { "variable" : "repeated_blood_pressure", "value": true}
+              ]
+            }
+          ]
+        },
+    "bp2": {
+      "text": "Your Pokémon’s blood pressure remains high and is cause for continued clinical evaluation.",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "diabetes"
+        }
+      ],
+      "image": "img/chart-increasing.png"
+    },
+    "diabetes": {
+      "text": "After environmental factors, let's check your medical history. Is your Pokémon diabetic?\n Knowing any history of diabetes can influence the management of your hypertension. Flip a coin. ",
+      "choices": [
+        {
+          "text": "Head",
+          "next": "diabetes_yes",
+          "data": [
+            { "variable" : "diabetes", "value": true }
+          ]
+        },
+        {
+          "text": "Tail",
+          "next": "diabetes_no",
+          "data": [
+            { "variable" : "diabetes", "value": false}
+          ]
+        }
+      ],
+      "info": "Approximately 10% of people in the UK have diabetes. This animated coin is biased to reflect this probability."
+    },
+    "diabetes_yes": {
+      "text": "Based on the coin flip, your Pokémon is diabetic and at increased risk of complications from hypertension. Let's begin treatment right away with ACE inhibitors. \n",
+      "choices": [
+        {
+          "text": "Treat with ACEi",
+          "next": "end_journey",
+          "data": [
+            { "variable" : "ACEi_treatment", "value": true }
+          ]
+        }
+      ],
+      "info": "Hypertension affects 20-60% of patients with diabetes, and diabetic patients with hypertension are at particularly high risk of complications like heart attacks. Angiotensin Converting Enzyme inhibitors (ACEIs) are the first line of management of diabetic hypertensives." 
+    },
+    "diabetes_no": {
+      "text": "Based on the coin flip, your Pokémon is not diabetic. That is cause for some relief.\n Diabetic patients with hypertension are at particularly high risk of complications like heart attacks. \n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "age"
+        }
+      ]
+    },
+    "age": {
+        "text": "How old is your Pokémon (what evolutionary stage is it at)? Age can affect how the doctor chooses to measure vital signs. \n",
+        "choices": [
+        {
+          "text": "Pre-evolved",
+          "next": "age_under_40"
+        },
+        {
+          "text": "Stage 1",
+          "next": "age_over_40"
+        },
+        {
+          "text": "Stage 2\n",
+          "next": "age_over_40"
+        }
+      ],
+       "info": "Pre-evolved - Bulbasaur, Charmander, or Squirtle.\n\nStage 1 - Ivysaur, Charmeleon, or Wartortle.\n\n Stage 2 - Venusaur, Charizard, or Blastoise.",
+       "variable": "age"
+    },
+    "age_under_40": {
+      "text": "In young Pokémons, hypertension might signal underlying physiological issues. Let's conduct MRI and lab tests to check their kidney and heart function.\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "diagnosis",
+          "data" : [
+            { "variable" : "MRI", "value": true },
+            { "variable" : "lab_tests", "value": true }
+          ]
+        }
+      ],
+      "image": "img/mri.png"
+    },
+    "diagnosis": {
+      "text": "Thankfully, everything is normal and these tests confirm a diagnosis of primary hypertension, which does not have a clear underlying cause but could be influenced by genetic, lifestyle, and environmental factors.\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "organ_damage"
+        }
+      ],
+      "image": "img/french-fries.png"
+    },
+    "age_over_40": {
+      "text": "In older Pokémon, primary hypertension is a more common diagnosis, which could be influenced by genetic, lifestyle, and environmental factors.\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "organ_damage"
+        }
+      ],
+      "image": "img/french-fries.png"
+    },
+    "organ_damage": {
+      "text": "Let's check for any damage to your Pokémon’s organs that might have been caused by elevated blood pressure. Flip a coin to reveal the test results of echocardiograms and additional labs.",
+      "choices": [
+        {
+          "text": "Heads",
+          "next": "organ_damage_yes1",
+          "data": [
+            { "variable" : "EKG", "value": true }
+          ]
+        },
+        {
+          "text": "Tails",
+          "next": "organ_damage_no",          
+          "data": [
+            { "variable" : "EKG", "value": true }
+          ]
+        }
+      ]
+    },
+    "organ_damage_no": {
+      "text": "Good news! The coin flip confirms your Pokémon does not have any target organ damage. This is a positive sign for their health moving forward.\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "ophthalmology1"
+        }
+      ],
+      "image": "img/heart-full.png"
+    },
+    "organ_damage_yes1" : {
+      "text": "The coin flip indicates damage to some of your Pokémon's organ systems.\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "organ_damage_yes"
+        }
+      ],
+      "image": "img/heart-empty.png"
+    },
+    "ophthalmology1": {
+      "text":"As one last check, we'll look for signs of hypertensive eye disease. Does your Pokémon wear glasses or contacts? \n",
+      "choices": [
+        {
+          "text": "Yes",
+          "next": "ophthalmology2"
+        },
+        {
+          "text": "No",
+          "next": "ophthalmology2"
+        }
+      ],
+      "image":"img/glasses.png"
+    },
+    "ophthalmology2": {
+      "text": "Have they had a recent eye test or ophthalmology examination? \n",
+      "choices": [
+        {
+          "text": "Yes",
+          "next": "ophthalmology_records",
+          "data": [
+            { "variable" : "opthalmology_test", "value": true}
+          ]
+        },
+        {
+          "text": "No",
+          "next": "ophthalmology_damage_yes",
+          "data": [
+            { "variable" : "opthalmology_test", "value": true}
+          ]
+        }
+      ],
+      "image":"img/glasses.png"
+    },
+    "ophthalmology_records": {
+      "text": "Let's pull up their medical records.\nNo sign of hypertensive eye disease was found on their recent exam.\u2028 Their early diagnosis indicates that regular BP monitoring over the next several weeks and lifestyle management may be a good approach going forward. \n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "end_journey"
+        }
+      ],
+      "image": "img/apple.png"
+    },
+    "ophthalmology_damage_yes": {
+      "text": "The doctor performed an eye examination and it revealed signs of ocular damage caused by high blood pressure. \n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "organ_damage_yes"
+        }
+      ],
+      "image": "img/eye.png"
+    },
+    "organ_damage_yes": {
+      "text": "Because of damage to parts of your Pokémon’s body, they are at risk of health complications and should undergo treatment right away to manage their hypertension effectively. \n",
+      "choices": [
+        {
+          "text": "Treat right away",
+          "next": "ancestry"
+        }
+      ],
+      "image": "img/pill.png"
+    },
+    "ancestry": {
+      "text": "Pokémon with certain ancestry backgrounds tend to respond differently to certain antihypertensive medications.\n",
+      "choices": [
+        {
+          "text": "SQUIRTLE",
+          "next": "afrocaribean_ancestry_yes"
+        },
+        {
+          "text": "CHARMANDER OR BULBASAUR",
+          "next": "afrocaribean_ancestry_no"
+        }
+      ]
+    },
+    "afrocaribean_ancestry_yes": {
+      "text": "Clinical studies have shown that water type Pokémon like Squirtle respond well to Calcium Channel Blockers (CCBs) and this is recommended as initial treatment alongside lifestyle modifications. \n",
+      "choices": [
+        {
+          "text": "Treat with CCB",
+          "next": "end_journey",
+          "data": [
+            { "variable" : "CCB_treatment", "value": true }
+          ]
+        }
+      ],
+      "info" : "In humans, clinical studies have shown that hypertensive patients of African or Afro-Caribbean descent respond well to Calcium Channel Blockers (CCBs) and this is recommended as initial treatment for newly diagnosed patients.",
+      "image": "img/pill_apple.png"
+    },
+    "afrocaribean_ancestry_no": {
+      "text": "Fire or grass type Pokémon like Charmander and Bulbasaur typically respond well to initial treatment with ACE inhibitors or Angiotensin II Receptor Blockers (ARBs) and this is recommended alongside lifestyle modifications. \n",
+      "choices": [
+        {
+          "text": "Treat with ACEi or ARB",
+          "next": "end_journey",
+          "data": [
+            { "variable" : "ACEi_treatment", "value": true }
+          ]
+        }
+      ],
+      "info": "In humans, clinical studies have shown that ACE inhibitors and ARBs are effective in patients of non-African and non-Afro-Caribbean descent.",
+      "image": "img/pill_apple.png"
+    },
+    "end_journey": {
+      "text": "Your Pokémon’s clinical journey ends here. \n\nThank you for taking part. Click “Next” to see how this data might be used in the real-world.\n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "summary"
+        }
+      ]
+    },
+    "summary": {
+      "text": "You consent to your Pokémon’s data entering a biobank on hypertension in UK patients to enable future research. Depending on your Pokémon’s risk profile and patient journey, they could be missing certain measurements that other hypertensive Pokémons experienced in their diagnosis and treatment journeys.\n\n Is it possible your Pokémon’s data have contributed to \"structured missingness\" in the biobank database? \n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "choices"
+        }
+      ],
+      "title": "Biobank",
+      "style": "summary"
+    },
+    "choices": {
+      "text": "Based on your Pokémon’s clinical journey, they could have measured or NOT measured any of the following variables:\n\n- Sitting and standing blood pressure\n- Sequence of repeated blood pressure measurements\n- MRI\n- EKG\n- Lab chemistry tests\n- Ophthalmology exam\n- ACE inhibitor treatment\n- Calcium channel blockers treatment\n\nWhich ones did you capture in your journey? \nGotta catch ’em all! \n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "structured_missingness"
+        }
+      ],
+      "title": "Collected data",
+      "style": "summary",
+      "variable": "collected_data"
+    },
+    "structured_missingness": {
+      "text": "“Structured missingness” happens when your data is combined with other data to form distinct structures, or blocks, of missingness across variables and patients. Here you can see the structured missingness in the biobank data, formed by combining your Pokémon’s medical records with those of other Pokémon who participated in this clinical journey. \n\nAn example of structured missingness is how older Pokémon of a certain age are always likely to be missing certain diagnostic assessments like MRIs and labs, or how diabetic Pokémon will proceed immediately to treatment and skip all other clinical examinations. Therefore, missingness is causally related across multiple missing variables. \n\nStructured missingness makes it challenging to analyze the data as a whole. \n",
+      "choices": [
+        {
+          "text": "Next",
+          "next": "end"
+        }
+      ],
+      "title": "Structured missingness",
+      "style": "summary",
+      "image": "img/structured_missingness.png"
+    },
+    "end": {
+      "text": "Researchers at the Turing Institute and Roche are jointly working to better detect and resolve structured missingness in large, multi-modal health databases like the fictional biobank described in this demo. \n\nOne project is using graphical methods like “networks” and “hypergraphs” to visualise and unravel the hidden structure of missing data in complex datasets.\n\nAnother project is developing new mathematical theory to explain and find a solution to structured missing data.\n\nScan the QR codes below to read the latest publications and outputs in this area from the Turing-Roche Partnership\n",
+      "style": "summary",
+      "title": "Turing - Roche research partnership",
+      "image": "img/logos.png",
+      "papers": [ {
+        "name" : "Learning from data with Structured Missingness - Nature Machine Intelligence Paper",
+        "qr" : "img/qr-nature.png"
+      }, {
+        "name": "A Complete Characterisation of Structured Missingness - arXiv Preprint",
+        "qr" : "img/qr-arxiv.png"
+      }
+      ]
+    }
+  }
+}

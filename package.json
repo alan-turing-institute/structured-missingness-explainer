@@ -13,6 +13,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "bulma": "^0.9.4"
+    "bulma": "^0.9.4",
+    "bulma-slider": "^2.0.5",
+    "nes.css": "^2.3.0"
   }
 }
