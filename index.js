@@ -151,7 +151,7 @@ function createChoicesElement(storyPart, button) {
 }
 function createAvatars(storyPart, button) {
     const avatarWrapper = document.createElement('div');
-    const avatars = ["bulbasaur", "charmander", "kirby"];
+    const avatars = ["bulbasaur", "charmander", "squirtle"];
     avatars.forEach((avatar) => {
         const avatarElement = document.createElement('i');
         avatarElement.className = "nes-" + avatar;
@@ -279,7 +279,7 @@ function createModalElement(variables, storyPart, button) {
     else {
         // restart button
         const restartButton = document.createElement('button');
-        restartButton.className = "nes-btn";
+        restartButton.className = "button is-danger";
         restartButton.type = "button";
         restartButton.innerText = "Restart";
         restartButton.addEventListener('click', () => {
@@ -290,7 +290,7 @@ function createModalElement(variables, storyPart, button) {
         });
         buttonWrapper.appendChild(restartButton);
     }
-    modalContent.appendChild(buttonWrapper);
+    content.appendChild(buttonWrapper);
     const modalClose = document.createElement('button');
     modalClose.className = "modal-close is-large";
     modalClose.setAttribute('aria-label', 'close');
