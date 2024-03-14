@@ -64,7 +64,7 @@
           ]
         }
       ],
-      "info": "Pre-evolved - Pikachu, Charmander, or Squirtle.\n\nStage 1 - Raichu, Charmeleon, or Wartortle.\n\n Stage 2 - Raichu+, Charizard, or Blastoise."
+      "info": "Pre-evolved - Bulbasaur, Charmander, or Squirtle.\n\nStage 1 - Ivysaur, Charmeleon, or Wartortle.\n\n Stage 2 - Venusaur, Charizard, or Blastoise."
 
     },
     "bp_over_80": {
@@ -240,7 +240,7 @@
           "next": "age_over_40"
         }
       ],
-       "info": "Pre-evolved - Pikachu, Charmander, or Squirtle.\n\nStage 1 - Raichu, Charmeleon, or Wartortle.\n\n Stage 2 - Raichu+, Charizard, or Blastoise.",
+       "info": "Pre-evolved - Bulbasaur, Charmander, or Squirtle.\n\nStage 1 - Ivysaur, Charmeleon, or Wartortle.\n\n Stage 2 - Venusaur, Charizard, or Blastoise.",
        "variable": "age"
     },
     "age_under_40": {
@@ -388,7 +388,7 @@
           "next": "afrocaribean_ancestry_yes"
         },
         {
-          "text": "CHARMANDER OR PIKACHU",
+          "text": "CHARMANDER OR BULBASAUR",
           "next": "afrocaribean_ancestry_no"
         }
       ]
@@ -408,7 +408,7 @@
       "image": "img/pill_apple.png"
     },
     "afrocaribean_ancestry_no": {
-      "text": "Fire or electric type Pokémon like Charmander and Pikachu typically respond well to initial treatment with ACE inhibitors or Angiotensin II Receptor Blockers (ARBs) and this is recommended alongside lifestyle modifications. \n",
+      "text": "Fire or grass type Pokémon like Charmander and Bulbasaur typically respond well to initial treatment with ACE inhibitors or Angiotensin II Receptor Blockers (ARBs) and this is recommended alongside lifestyle modifications. \n",
       "choices": [
         {
           "text": "Treat with ACEi or ARB",
@@ -471,10 +471,10 @@
       "title": "Turing - Roche research partnership",
       "image": "img/logos.png",
       "papers": [ {
-        "name" : "Learning from data with Structured Missingness- Nature Machine Intelligence Paper",
+        "name" : "Learning from data with Structured Missingness - Nature Machine Intelligence Paper",
         "qr" : "img/qr-nature.png"
       }, {
-        "name": "A Complete Characterisation of Structured Missingness- arXiv Preprint",
+        "name": "A Complete Characterisation of Structured Missingness - arXiv Preprint",
         "qr" : "img/qr-arxiv.png"
       }
       ]
