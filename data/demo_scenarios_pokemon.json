@@ -72,7 +72,7 @@
       "variable": "blood_pressure",
       "choices": [
         {
-          "text": "Save sitting and standing blood pressure",
+          "text": "Next",
           "next": "bp",
           "data": [
             { "variable" : "blood_pressure", "value": true}
@@ -85,7 +85,7 @@
       "variable": "blood_pressure",
       "choices": [
         {
-          "text": "Save blood pressure",
+          "text": "Next",
           "next": "bp",
           "data": [
             { "variable" : "blood_pressure", "value": false}
@@ -137,7 +137,7 @@
       "variable": "blood_pressure",
       "choices": [
         {
-          "text": "Save blood pressure",
+          "text": "Next",
           "next": "bp2",
           "data": [
             { "variable" : "repeated_blood_pressure", "value": true}
@@ -146,11 +146,11 @@
       ]
     },
       "coffee_yes":{
-          "text": "Recent caffeine might explain a higher BP reading. Let's do a second blood pressure read later in the day.\n",
+          "text": "Recent caffeine might explain a higher BP reading. Let's do a second blood pressure reading to check.\n",
           "variable": "blood_pressure",
           "choices": [
             {
-              "text": "Save blood pressure",
+              "text": "Next",
               "next": "bp2",
               "data": [
                 { "variable" : "repeated_blood_pressure", "value": true}
@@ -160,11 +160,11 @@
         },
         "exercise":
         {
-          "text": "Recent exercise might explain a higher BP reading. Let's do a second blood pressure read later in the day.\n",
+          "text": "Recent exercise might explain a higher BP reading. Let's do a second blood pressure reading to check.\n",
           "variable": "blood_pressure",
           "choices": [
             {
-              "text": "Save blood pressure",
+              "text": "Next",
               "next": "bp2",
               "data": [
                 { "variable" : "repeated_blood_pressure", "value": true}
@@ -183,7 +183,7 @@
       "image": "img/chart-increasing.png"
     },
     "diabetes": {
-      "text": "After environmental factors, let's check your medical history. Is your Pokémon diabetic?\n Knowing any history of diabetes can influence the management of your hypertension. Flip a coin. ",
+      "text": "After environmental factors, let's check your medical history. Is your Pokémon diabetic?\n Knowing any history of diabetes can influence the management of hypertension. Flip a coin. ",
       "choices": [
         {
           "text": "Head",
@@ -244,7 +244,7 @@
        "variable": "age"
     },
     "age_under_40": {
-      "text": "In young Pokémons, hypertension might signal underlying physiological issues. Let's conduct MRI and lab tests to check their kidney and heart function.\n",
+      "text": "As you reported, your Pokémon is in an early evolution.In young Pokémons, hypertension might signal underlying physiological issues. Let's conduct MRI and lab tests to check their kidney and heart function.\n",
       "choices": [
         {
           "text": "Next",
@@ -268,7 +268,7 @@
       "image": "img/french-fries.png"
     },
     "age_over_40": {
-      "text": "In older Pokémon, primary hypertension is a more common diagnosis, which could be influenced by genetic, lifestyle, and environmental factors.\n",
+      "text": "As you reported, your Pokémon is in a later evolution. In older Pokémon, primary hypertension is a more common diagnosis, which does not have a clear underlying cause but could be influenced by genetic, lifestyle, and environmental factors.\n",
       "choices": [
         {
           "text": "Next",
@@ -381,7 +381,7 @@
       "image": "img/pill.png"
     },
     "ancestry": {
-      "text": "Pokémon with certain ancestry backgrounds tend to respond differently to certain antihypertensive medications.\n",
+      "text": "Pokémon with certain ancestry backgrounds tend to respond differently to certain antihypertensive medications. Was your pokemon a squirtle or a charmanader or bulbasaur?\n",
       "choices": [
         {
           "text": "SQUIRTLE",
