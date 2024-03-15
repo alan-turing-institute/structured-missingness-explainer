@@ -4,8 +4,7 @@ The [Turing-Roche Partnership](https://www.turing.ac.uk/research/research-projec
 The partnership had an exhibit at the AI UK Conference in March 2024 and as part of that developed an interactive demo for attendees to engage with, which is also now available here. The demo was developed by Camila Rangel Smith and Evelina Gabasova from the [Turing Research Engineering Group](https://www.turing.ac.uk/work-turing/research/research-engineering-group), with content input from Sarah McGough, Vicky Hellon and Chris Banerji from the partnership team.
 The demo aims to take users on an interactive clinical journey to understand how clinical data is collected and combined in practice, and introduce the partnership's research theme on structured missingness. You can find out more about the partnership [here](https://www.turing.ac.uk/research/research-projects/alan-turing-institute-roche-strategic-partnership) and our research on structured missingness [here](https://www.nature.com/articles/s42256-022-00596-z).
 
-You can find the demo deployed in GitHub pages in the following link: [structured missingness explainer AIUK demo](https://turing-roche-partnership.github.io/structured-missingness-explainer/).
-
+You can find the demo deployed in GitHub pages in the following link: [structured missingness explainer AIUK demo](https://alan-turing-institute.github.io/structured-missingness-explainer/).
 
 ## Building the demo locally in your machine
 
@@ -15,7 +14,7 @@ You can find the demo deployed in GitHub pages in the following link: [structure
 - Typescript: `npm install --save-dev typescript`
 - http-server: `npm install -g http-server`
 
-###ß Build:
+### Build:
 
 1. Install dependencies
 ```
