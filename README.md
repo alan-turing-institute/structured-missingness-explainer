@@ -15,7 +15,7 @@ You can find the demo deployed in GitHub pages in the following link: [structure
 - Typescript: `npm install --save-dev typescript`
 - http-server: `npm install -g http-server`
 
-###ß Build:
+### Build:
 
 1. Install dependencies
 ```
