@@ -200,7 +200,8 @@
           ]
         }
       ],
-      "info": "Approximately 10% of people in the UK have diabetes. This animated coin is biased to reflect this probability."
+      "info": "Approximately 10% of people in the UK have diabetes. This simulated coin is biased to reflect this probability.",
+      "variable" : "coin_flip_diabetes"
     },
     "diabetes_yes": {
       "text": "Based on the coin flip, your Pokémon is diabetic and at increased risk of complications from hypertension. Let's begin treatment right away with ACE inhibitors. \n",
@@ -294,7 +295,8 @@
             { "variable" : "EKG", "value": true }
           ]
         }
-      ]
+      ],
+      "variable" : "coin_flip_organ_damage"
     },
     "organ_damage_no": {
       "text": "Good news! The coin flip confirms your Pokémon does not have any target organ damage. This is a positive sign for their health moving forward.\n",

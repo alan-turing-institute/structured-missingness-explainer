@@ -2,6 +2,7 @@
 // Initialise values
 let userCollectedData = {};
 let currentStoryPart = 'start';
+let coinToss = 'heads';
 // TODO: Change this, this is ugly and hard-coded and will not work in the long run!!!
 // create an array of 11 elements (boolean) to store the user's choices and fill it 
 // with random values for now
@@ -16,7 +17,7 @@ async function fetchStory() {
     }
     return await response.json();
 }
-function createBloodPressureElement() {
+function createBloodPressureElement(storyPart, button) {
     const progress = document.createElement('progress');
     progress.className = "nes-progress";
     progress.value = 140;
@@ -31,10 +32,10 @@ function createBloodPressureElement() {
         value += direction;
         progress.value = value;
     }, 1);
-    const button = document.createElement('button');
-    button.className = "nes-btn is-warning";
-    button.innerText = "Take measurement";
-    button.addEventListener('click', () => {
+    const measureButton = document.createElement('button');
+    measureButton.className = "nes-btn is-warning";
+    measureButton.innerText = "Take measurement";
+    measureButton.addEventListener('click', () => {
         clearInterval(animate);
         const dialog = document.createElement('dialog');
         dialog.className = "nes-dialog";
@@ -52,6 +53,16 @@ function createBloodPressureElement() {
         cancelButton.innerText = "Oh no!";
         cancelButton.addEventListener('click', () => {
             dialog.close();
+            if (storyPart.choices) {
+                // Save user choices, if present
+                if (storyPart.choices[0].data) {
+                    storyPart.choices[0].data.forEach((data) => {
+                        userCollectedData[data.variable] = data.value;
+                    });
+                }
+                currentStoryPart = storyPart.choices[0].next;
+                button.click(); // Trigger the next part of the story
+            }
         });
         menu.appendChild(cancelButton);
         form.appendChild(menu);
@@ -62,11 +73,11 @@ function createBloodPressureElement() {
     });
     const wrapper = document.createElement('div');
     wrapper.appendChild(progress);
-    wrapper.appendChild(button);
+    wrapper.appendChild(measureButton);
     return wrapper;
 }
 // Overall card element for the story part
-function createCardElement(storyPart, stepCounter) {
+function createCardElement(storyPart, stepCounter, button) {
     const card = document.createElement('div');
     const cardTitle = document.createElement('p');
     cardTitle.className = "title";
@@ -81,7 +92,7 @@ function createCardElement(storyPart, stepCounter) {
     content.innerText = storyPart.text;
     if (storyPart.variable && storyPart.variable == "blood_pressure") {
         // create an animated slider for blood pressure measurement
-        const bloodPressureElement = createBloodPressureElement();
+        const bloodPressureElement = createBloodPressureElement(storyPart, button);
         content.appendChild(bloodPressureElement);
     }
     if (storyPart.image) {
@@ -98,7 +109,7 @@ function createCardElement(storyPart, stepCounter) {
     }
     card.appendChild(content);
     // if storyPart.text contains "Flip a coin", add a coin icon
-    if (storyPart.text.includes("Flip a coin")) {
+    if (storyPart.variable && storyPart.variable == "coin") {
         const coinWrapper = document.createElement('div');
         coinWrapper.className = "columns is-centered";
         const coin = document.createElement('i');
@@ -112,28 +123,44 @@ function createCardElement(storyPart, stepCounter) {
 function createChoicesElement(storyPart, button) {
     const buttonWrapper = document.createElement('div');
     buttonWrapper.className = "buttons is-centered";
-    if (storyPart.choices) {
-        storyPart.choices.forEach((choice) => {
-            const choiceButton = document.createElement('button');
-            choiceButton.innerText = choice.text;
-            if (storyPart.style && storyPart.style == "summary") {
-                choiceButton.className = "button is-primary";
-            }
-            else {
-                choiceButton.className = "nes-btn is-primary";
-            }
-            choiceButton.addEventListener('click', () => {
-                // Save user choices, if present
-                if (choice.data) {
-                    choice.data.forEach((data) => {
-                        userCollectedData[data.variable] = data.value;
-                    });
-                }
-                currentStoryPart = choice.next;
-                button.click(); // Trigger the next part of the story
-            });
-            buttonWrapper.appendChild(choiceButton);
+    if (storyPart.variable && storyPart.variable.startsWith("coin_flip")) {
+        const coinButton = document.createElement('button');
+        coinButton.innerText = "Toss a coin";
+        coinButton.className = "nes-btn is-primary";
+        coinButton.addEventListener('click', () => {
+            coinToss = (Math.random() >= 0.9) ? 'heads' : 'tails';
+            currentStoryPart = storyPart.choices ? storyPart.choices[coinToss == 'heads' ? 0 : 1].next : "symptoms";
+            button.click(); // Trigger the next part of the story
         });
+        buttonWrapper.appendChild(coinButton);
+    }
+    else if (storyPart.variable && storyPart.variable == "blood_pressure") {
+        // do nothing
+    }
+    else {
+        if (storyPart.choices) {
+            storyPart.choices.forEach((choice) => {
+                const choiceButton = document.createElement('button');
+                choiceButton.innerText = choice.text;
+                if (storyPart.style && storyPart.style == "summary") {
+                    choiceButton.className = "button is-primary";
+                }
+                else {
+                    choiceButton.className = "nes-btn is-primary";
+                }
+                choiceButton.addEventListener('click', () => {
+                    // Save user choices, if present
+                    if (choice.data) {
+                        choice.data.forEach((data) => {
+                            userCollectedData[data.variable] = data.value;
+                        });
+                    }
+                    currentStoryPart = choice.next;
+                    button.click(); // Trigger the next part of the story
+                });
+                buttonWrapper.appendChild(choiceButton);
+            });
+        }
     }
     // ugly and hacked together, but it should work for now
     if (storyPart.variable && storyPart.variable == "age") {
@@ -365,7 +392,7 @@ window.onload = async () => {
                 const storyPart = data.story[currentStoryPart];
                 if (currentStoryPart === 'start') {
                     dataElement.innerHTML = ''; // clear previous content 
-                    const card = createCardElement(storyPart, stepCounter);
+                    const card = createCardElement(storyPart, stepCounter, button);
                     dataElement.appendChild(card);
                     stepCounter++;
                     // Create buttons for the choices
@@ -384,7 +411,7 @@ window.onload = async () => {
                         dataElement.appendChild(modal);
                     }
                     else {
-                        const card = createCardElement(storyPart, stepCounter);
+                        const card = createCardElement(storyPart, stepCounter, button);
                         dataElement.appendChild(card);
                         stepCounter++;
                         // Create buttons for the choices
