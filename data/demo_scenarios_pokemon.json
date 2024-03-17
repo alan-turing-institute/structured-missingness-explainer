@@ -1,15 +1,15 @@
 {
   "variables": [
     { "id" : "old", "name": "Age", "display" : false },
-    { "id" : "blood_pressure", "name": "Sitting and standing blood pressure", "display" : true },
-    { "id" : "repeated_blood_pressure", "name": "Sequence of repeated blood pressure measurements", "display" : true },
+    { "id" : "blood_pressure_sitting_standing", "name": "Sitting and standing blood pressure", "display" : true },
+    { "id" : "blood_pressure_1", "name" : "First blood pressure monitoring", "display": true},
     { "id" : "diabetes", "name": "Diabetes", "display" : false },
-    { "id" : "MRI", "name": "MRI scan", "display" : true },
-    { "id" : "lab_tests", "name": "Lab chemistry tests", "display" : true },
-    { "id" : "EKG", "name": "EKG", "display" : true },
-    { "id" : "opthalmology_test", "name": "Ophthalmology exam", "display" : true },
+    { "id" : "MRI and labs", "name": "MRI scan and lab tests", "display" : true },
+    { "id" : "EKG", "name": "EKG and other organ damage tests", "display" : true },
+    { "id" : "opthalmology_test", "name": "Eye exam today", "display" : true },    { "id" : "blood_pressure_2", "name" : "Second blood pressure monitoring", "display": true},
     { "id" : "ACEi_treatment", "name": "ACE inhibitor treatment", "display" : true },
-    { "id" : "CCB_treatment", "name": "Calcium channel blockers treatment", "display" : true }
+    { "id" : "CCB_treatment", "name": "Calcium channel blockers treatment", "display" : true },
+    { "id" : "repeated_blood_pressure", "name": "Repeated blood pressure monitoring", "display" : true }
   ],
   "story": {
     "start": {
@@ -75,7 +75,8 @@
           "text": "Next",
           "next": "bp",
           "data": [
-            { "variable" : "blood_pressure", "value": true}
+            { "variable" : "blood_pressure_sitting_standing", "value": true},
+            { "variable" : "blood_pressure_1", "value": true}
           ]
         }
       ]
@@ -88,7 +89,8 @@
           "text": "Next",
           "next": "bp",
           "data": [
-            { "variable" : "blood_pressure", "value": false}
+            { "variable" : "blood_pressure_sitting_standing", "value": false},
+            { "variable" : "blood_pressure_1", "value": true}
           ]
         }
       ]
@@ -140,7 +142,7 @@
           "text": "Next",
           "next": "bp2",
           "data": [
-            { "variable" : "repeated_blood_pressure", "value": true}
+            { "variable" : "blood_pressure_2", "value": true}
           ]
         }
       ]
@@ -153,7 +155,7 @@
               "text": "Next",
               "next": "bp2",
               "data": [
-                { "variable" : "repeated_blood_pressure", "value": true}
+                { "variable" : "blood_pressure_2", "value": true}
               ]
             }
           ]
@@ -167,7 +169,7 @@
               "text": "Next",
               "next": "bp2",
               "data": [
-                { "variable" : "repeated_blood_pressure", "value": true}
+                { "variable" : "blood_pressure_2", "value": true}
               ]
             }
           ]
@@ -251,8 +253,7 @@
           "text": "Next",
           "next": "diagnosis",
           "data" : [
-            { "variable" : "MRI", "value": true },
-            { "variable" : "lab_tests", "value": true }
+            { "variable" : "MRI and labs", "value": true }
           ]
         }
       ],
@@ -346,7 +347,7 @@
           "text": "No",
           "next": "ophthalmology_damage_yes",
           "data": [
-            { "variable" : "opthalmology_test", "value": true}
+            { "variable" : "opthalmology_test", "value": false}
           ]
         }
       ],
@@ -357,7 +358,10 @@
       "choices": [
         {
           "text": "Next",
-          "next": "end_journey"
+          "next": "end_journey",
+          "data": [
+            { "variable" : "repeated_blood_pressure", "value": true}
+          ]
         }
       ],
       "image": "img/apple.png"
@@ -444,7 +448,7 @@
       "style": "summary"
     },
     "choices": {
-      "text": "Based on your Pokémon’s clinical journey, they could have measured or NOT measured any of the following variables:\n\n- Sitting and standing blood pressure\n- Sequence of repeated blood pressure measurements\n- MRI\n- EKG\n- Lab chemistry tests\n- Ophthalmology exam\n- ACE inhibitor treatment\n- Calcium channel blockers treatment\n\nWhich ones did you capture in your journey? \nGotta catch ’em all! \n",
+      "text": "Based on your Pokémon’s clinical journey, they could have measured or NOT measured any number of variables. Which ones did you capture in your journey? \nGotta catch ’em all! \n",
       "choices": [
         {
           "text": "Next",
@@ -465,7 +469,7 @@
       ],
       "title": "Structured missingness",
       "style": "summary",
-      "image": "img/structured_missingness.png"
+      "variable": "structured_missingness"
     },
     "end": {
       "text": "Researchers at the Turing Institute and Roche are jointly working to better detect and resolve structured missingness in large, multi-modal health databases like the fictional biobank described in this demo. \n\nOne project is using graphical methods like “networks” and “hypergraphs” to visualise and unravel the hidden structure of missing data in complex datasets.\n\nAnother project is developing new mathematical theory to explain and find a solution to structured missing data.\n\nScan the QR codes below to read the latest publications and outputs in this area from the Turing-Roche Partnership\n",

@@ -47,10 +47,15 @@ interface IUserCollectedData {
     [key: string]: boolean ;
 }
 
+interface IMissingDataPattern {
+    item_names : string [];
+    item_values : string [][];
+}
+
 // Initialise values
 let userCollectedData: IUserCollectedData = {};
-let currentStoryPart = 'diabetes';
-let coinToss = 'heads';
+let currentStoryPart = 'start';
+let coinToss = 'HEADS';
 
 // TODO: Change this, this is ugly and hard-coded and will not work in the long run!!!
 // create an array of 11 elements (boolean) to store the user's choices and fill it 
@@ -333,7 +338,7 @@ function summariseCollectedData(variables: IVariable[], userCollectedData: IUser
     const th1 = document.createElement('th');
     th1.innerText = "Variable";
     const th2 = document.createElement('th');
-    th2.innerText = "Value";
+    th2.innerText = "Measured";
     tr.appendChild(th1);
     tr.appendChild(th2);
     thead.appendChild(tr);
@@ -367,7 +372,82 @@ function summariseCollectedData(variables: IVariable[], userCollectedData: IUser
     return table;
 }
 
-function createModalElement(variables: IVariable[], storyPart: IStoryPart, button: HTMLElement): HTMLElement {
+async function fetchMissingnessStructure(): Promise<IMissingDataPattern> {
+    const response = await fetch('data/missing_data_structure.json');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return await response.json();
+}
+
+function visualiseMissignessTable(missingnessPatterns : IMissingDataPattern, variables: IVariable[], userCollectedData: IUserCollectedData): HTMLElement {
+
+    // create a bulma table with elements coloured blue and red based on "Yes"/"No" from the json
+    const table = document.createElement('table');
+    table.className = "table is-bordered is-narrow is-small";
+    table.style.tableLayout = "fixed"; 
+
+    const tfoot = document.createElement('tfoot');
+    const tr = document.createElement('tr');
+    
+    const names = missingnessPatterns.item_names;
+    names.forEach((name: string) => {
+        const th = document.createElement('th');
+        th.innerText = name;
+        th.className = "is-size-7";
+        th.style.width = "1%";  
+        tr.appendChild(th);
+    });
+    tfoot.appendChild(tr);
+    table.appendChild(tfoot);
+
+    const tbody = document.createElement('tbody');
+
+    const collected_comparison : boolean [] = [];
+    variables.forEach((x: IVariable) => {
+        if (x.display) {
+            if (userCollectedData[x.id] === undefined) {
+                userCollectedData[x.id] = false;
+            }
+            collected_comparison.push(userCollectedData[x.id]);
+        }
+    });
+
+    missingnessPatterns.item_values.forEach((row: string[]) => {
+        const tr = document.createElement('tr');
+
+        const comparison : boolean [] = [];
+        
+        row.forEach((value: string) => {
+            const td = document.createElement('td');
+            td.style.border = "black solid 1px";
+            td.style.height = "1em";
+            if (value == "Yes") {
+                // change background colour
+                td.style.backgroundColor = "#3896c4";
+                comparison.push(true);
+            } else if (value == "No") {
+                // change background colour
+                td.style.backgroundColor = "#ed444a";
+                comparison.push(false);
+            }
+            tr.appendChild(td);
+        });
+
+        if (JSON.stringify(comparison) == JSON.stringify(collected_comparison)) {
+            tr.style.border = "black solid 5px";
+        }
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+
+    return table;
+
+}
+
+function createModalElement(missingnessPatterns : IMissingDataPattern, variables: IVariable[], storyPart: IStoryPart, button: HTMLElement): HTMLElement {
     const modal = document.createElement('div');
     modal.className = "modal is-active is-large";
     modal.style.fontFamily = "Helvetica, sans-serif";
@@ -397,6 +477,15 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
 
     if (storyPart.variable && storyPart.variable == "collected_data") {
         const dataTable = summariseCollectedData(variables, userCollectedData);
+        content.appendChild(dataTable);
+    }
+
+    if (storyPart.variable && storyPart.variable == "structured_missingness") {
+        const subheading = document.createElement('h4');
+        subheading.className = "subtitle is-small";
+        subheading.innerText = "Possible patterns of missing data";
+        content.appendChild(subheading);
+        const dataTable = visualiseMissignessTable(missingnessPatterns, variables, userCollectedData);
         content.appendChild(dataTable);
     }
 
@@ -552,6 +641,7 @@ window.onload = async () => {
                 // Fetch the story data, currently from a local JSON file
                 // TODO: from a public GitHub repository
                 const data = await fetchStory();
+                const missingness = await fetchMissingnessStructure();    
 
 
 
@@ -582,7 +672,7 @@ window.onload = async () => {
 
                     if (storyPart.style && storyPart.style == "summary") {
                         // serious style
-                        const modal = createModalElement(data.variables, storyPart, button);
+                        const modal = createModalElement(missingness, data.variables, storyPart, button);
                         dataElement.appendChild(modal);
                     } else {
 
