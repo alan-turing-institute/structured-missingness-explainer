@@ -1,7 +1,7 @@
 "use strict";
 // Initialise values
 let userCollectedData = {};
-let currentStoryPart = 'start';
+let currentStoryPart = 'diabetes';
 let coinToss = 'heads';
 // TODO: Change this, this is ugly and hard-coded and will not work in the long run!!!
 // create an array of 11 elements (boolean) to store the user's choices and fill it 
@@ -108,8 +108,7 @@ function createCardElement(storyPart, stepCounter, button) {
         content.appendChild(imageWrapper);
     }
     card.appendChild(content);
-    // if storyPart.text contains "Flip a coin", add a coin icon
-    if (storyPart.variable && storyPart.variable == "coin") {
+    if (storyPart.variable && storyPart.variable.startsWith("coin")) {
         const coinWrapper = document.createElement('div');
         coinWrapper.className = "columns is-centered";
         const coin = document.createElement('i');
@@ -128,9 +127,53 @@ function createChoicesElement(storyPart, button) {
         coinButton.innerText = "Toss a coin";
         coinButton.className = "nes-btn is-primary";
         coinButton.addEventListener('click', () => {
-            coinToss = (Math.random() >= 0.9) ? 'heads' : 'tails';
-            currentStoryPart = storyPart.choices ? storyPart.choices[coinToss == 'heads' ? 0 : 1].next : "symptoms";
-            button.click(); // Trigger the next part of the story
+            // Create a modal showing result of a coin toss
+            const coinModal = document.createElement('dialog');
+            coinModal.className = "nes-dialog";
+            coinModal.id = "dialog-default";
+            const form = document.createElement('form');
+            form.method = "dialog";
+            const title = document.createElement('p');
+            title.className = "title";
+            title.innerText = "Coin toss";
+            form.appendChild(title);
+            // add a coin icon 
+            const coin = document.createElement('i');
+            coin.className = "nes-icon coin is-large is-centered";
+            form.appendChild(coin);
+            const info = document.createElement('p');
+            // choose different probability for diabetes coin flip
+            const probability = (storyPart.variable == 'coin_flip_diabetes') ? 0.9 : 0.5;
+            coinToss = (Math.random() >= probability) ? 'HEADS' : 'TAILS';
+            let outcome = '';
+            if (storyPart.variable == 'coin_flip_diabetes') {
+                outcome = (coinToss == 'HEADS') ? 'diabetes' : 'no diabetes';
+            }
+            else if (storyPart.variable == 'coin_flip_organ_damage') {
+                outcome = (coinToss == 'HEADS') ? 'organ damage' : 'no organ damage';
+            }
+            info.innerText = "The coin landed on: " + coinToss + " (" + outcome + ")";
+            form.appendChild(info);
+            const menu = document.createElement('menu');
+            menu.className = "dialog-menu";
+            const cancelButton = document.createElement('button');
+            cancelButton.className = "nes-btn is-primary";
+            cancelButton.innerText = "Next";
+            cancelButton.addEventListener('click', () => {
+                coinModal.close();
+                if (storyPart.choices) {
+                    currentStoryPart = storyPart.choices[coinToss == 'HEADS' ? 0 : 1].next;
+                    button.click(); // Trigger the next part of the story
+                }
+            });
+            menu.appendChild(cancelButton);
+            form.appendChild(menu);
+            coinModal.appendChild(form);
+            document.body.appendChild(coinModal);
+            coinModal.showModal();
+            // coinToss = (Math.random() >= 0.9) ? 'heads' : 'tails';
+            // currentStoryPart = storyPart.choices ? storyPart.choices[coinToss == 'heads' ? 0 : 1].next : "symptoms";
+            // button.click(); // Trigger the next part of the story
         });
         buttonWrapper.appendChild(coinButton);
     }
