@@ -47,9 +47,15 @@ interface IUserCollectedData {
     [key: string]: boolean ;
 }
 
+interface IMissingDataPattern {
+    item_names : string [];
+    item_values : string [][];
+}
+
 // Initialise values
 let userCollectedData: IUserCollectedData = {};
 let currentStoryPart = 'start';
+let coinToss = 'HEADS';
 
 // TODO: Change this, this is ugly and hard-coded and will not work in the long run!!!
 // create an array of 11 elements (boolean) to store the user's choices and fill it 
@@ -69,7 +75,7 @@ async function fetchStory(): Promise<IStoryData> {
     return await response.json();
 }
 
-function createBloodPressureElement(): HTMLElement {
+function createBloodPressureElement(storyPart: IStoryPart, button: HTMLElement): HTMLElement {
     const progress = document.createElement('progress');
     progress.className = "nes-progress";
     progress.value = 140;
@@ -84,10 +90,10 @@ function createBloodPressureElement(): HTMLElement {
         progress.value = value;
       }, 1);
 
-    const button = document.createElement('button');
-    button.className = "nes-btn is-warning";
-    button.innerText = "Take measurement";
-    button.addEventListener('click', () => {
+    const measureButton = document.createElement('button');
+    measureButton.className = "nes-btn is-warning";
+    measureButton.innerText = "Take measurement";
+    measureButton.addEventListener('click', () => {
         clearInterval(animate);
 
         const dialog = document.createElement('dialog');
@@ -97,7 +103,7 @@ function createBloodPressureElement(): HTMLElement {
         form.method = "dialog";
         const title = document.createElement('p');
         title.className = "title";
-        title.innerText = "Your blood pressure is: " + progress.value;
+        title.innerText = "Your systolic blood pressure is: " + progress.value;
         form.appendChild(title);
         const menu = document.createElement('menu');
         menu.className = "dialog-menu";
@@ -106,6 +112,18 @@ function createBloodPressureElement(): HTMLElement {
         cancelButton.innerText = "Oh no!";
         cancelButton.addEventListener('click', () => {
             dialog.close();
+            if (storyPart.choices) {
+                                
+                // Save user choices, if present
+                if (storyPart.choices[0].data) {
+                    storyPart.choices[0].data.forEach((data: IData) => {
+                        userCollectedData[data.variable] = data.value;
+                    });
+                }
+                currentStoryPart = storyPart.choices[0].next;
+                button.click(); // Trigger the next part of the story
+
+            }
         });
         menu.appendChild(cancelButton);
         form.appendChild(menu);
@@ -120,7 +138,7 @@ function createBloodPressureElement(): HTMLElement {
 
     const wrapper = document.createElement('div');
     wrapper.appendChild(progress);
-    wrapper.appendChild(button);
+    wrapper.appendChild(measureButton);
 
     return wrapper;
 
@@ -129,7 +147,7 @@ function createBloodPressureElement(): HTMLElement {
 
 
 // Overall card element for the story part
-function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElement {
+function createCardElement(storyPart: IStoryPart, stepCounter: number, button: HTMLElement): HTMLElement {
     const card = document.createElement('div');
 
     const cardTitle = document.createElement('p');
@@ -146,7 +164,7 @@ function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElem
 
     if (storyPart.variable && storyPart.variable == "blood_pressure") {
         // create an animated slider for blood pressure measurement
-        const bloodPressureElement = createBloodPressureElement();
+        const bloodPressureElement = createBloodPressureElement(storyPart, button);
         content.appendChild(bloodPressureElement);   
     }
 
@@ -167,8 +185,8 @@ function createCardElement(storyPart: IStoryPart, stepCounter: number): HTMLElem
 
     card.appendChild(content);
 
-    // if storyPart.text contains "Flip a coin", add a coin icon
-    if (storyPart.text.includes("Flip a coin")) {
+
+    if (storyPart.variable && storyPart.variable.startsWith("coin")) {
         const coinWrapper = document.createElement('div');
         coinWrapper.className = "columns is-centered";
 
@@ -187,29 +205,95 @@ function createChoicesElement(storyPart: IStoryPart, button: HTMLElement): HTMLE
     const buttonWrapper = document.createElement('div');
     buttonWrapper.className = "buttons is-centered";
 
-    if (storyPart.choices) {
-        storyPart.choices.forEach((choice: IChoice) => {
-            const choiceButton = document.createElement('button');
-            choiceButton.innerText = choice.text;
-            if (storyPart.style && storyPart.style == "summary") {
-                choiceButton.className = "button is-primary";
-            } else {
-                choiceButton.className = "nes-btn is-primary";
+    if (storyPart.variable && storyPart.variable.startsWith("coin_flip")) {
+        const coinButton = document.createElement('button');
+        coinButton.innerText = "Toss a coin";
+        coinButton.className = "nes-btn is-primary";
+        coinButton.addEventListener('click', () => {
+
+            // Create a modal showing result of a coin toss
+            const coinModal = document.createElement('dialog');
+            coinModal.className = "nes-dialog";
+            coinModal.id = "dialog-default";
+            const form = document.createElement('form');
+            form.method = "dialog";
+            const title = document.createElement('p');
+            title.className = "title";
+            title.innerText = "Coin toss";
+            form.appendChild(title);
+
+            // add a coin icon 
+            const coin = document.createElement('i');
+            coin.className = "nes-icon coin is-large is-centered";
+            form.appendChild(coin);
+            const info = document.createElement('p');
+
+            // choose different probability for diabetes coin flip
+            const probability = (storyPart.variable == 'coin_flip_diabetes')? 0.9 : 0.5;
+            coinToss = (Math.random() >= probability) ? 'HEADS' : 'TAILS';
+
+            let outcome = '';
+            if (storyPart.variable == 'coin_flip_diabetes') {
+                outcome = (coinToss == 'HEADS') ? 'diabetes' : 'no diabetes';
+            } else if (storyPart.variable == 'coin_flip_organ_damage') {
+                outcome = (coinToss == 'HEADS') ? 'organ damage' : 'no organ damage';
+                
             }
-            choiceButton.addEventListener('click', () => {
+            info.innerText = "The coin landed on: " + coinToss + " (" + outcome + ")";
+            form.appendChild(info);
 
-                // Save user choices, if present
-                if (choice.data) {
-                    choice.data.forEach((data: IData) => {
-                        userCollectedData[data.variable] = data.value;
-                    });
+            const menu = document.createElement('menu');
+            menu.className = "dialog-menu";
+            const cancelButton = document.createElement('button');
+            cancelButton.className = "nes-btn is-primary";
+            cancelButton.innerText = "Next";
+            cancelButton.addEventListener('click', () => {
+                coinModal.close();
+                if (storyPart.choices) {
+                    currentStoryPart = storyPart.choices[coinToss == 'HEADS' ? 0 : 1].next;
+                    button.click(); // Trigger the next part of the story
                 }
-
-                currentStoryPart = choice.next;
-                button.click(); // Trigger the next part of the story
             });
-            buttonWrapper.appendChild(choiceButton);
+            menu.appendChild(cancelButton);
+            form.appendChild(menu);
+            coinModal.appendChild(form);
+            document.body.appendChild(coinModal);
+            coinModal.showModal();
+
+
+            // coinToss = (Math.random() >= 0.9) ? 'heads' : 'tails';
+            // currentStoryPart = storyPart.choices ? storyPart.choices[coinToss == 'heads' ? 0 : 1].next : "symptoms";
+            // button.click(); // Trigger the next part of the story
         });
+        buttonWrapper.appendChild(coinButton);
+
+    } else if (storyPart.variable && storyPart.variable == "blood_pressure") {
+        // do nothing
+    } else {
+        if (storyPart.choices) {
+            storyPart.choices.forEach((choice: IChoice) => {
+                const choiceButton = document.createElement('button');
+                choiceButton.innerText = choice.text;
+                if (storyPart.style && storyPart.style == "summary") {
+                    choiceButton.className = "button is-primary";
+                } else {
+                    choiceButton.className = "nes-btn is-primary";
+                }
+                choiceButton.addEventListener('click', () => {
+
+                    // Save user choices, if present
+                    if (choice.data) {
+                        choice.data.forEach((data: IData) => {
+                            userCollectedData[data.variable] = data.value;
+                        });
+                    }
+
+                    currentStoryPart = choice.next;
+                    button.click(); // Trigger the next part of the story
+                });
+                buttonWrapper.appendChild(choiceButton);
+            });
+        }
     }
 
     // ugly and hacked together, but it should work for now
@@ -234,7 +318,6 @@ function createAvatars(storyPart: IStoryPart, button:HTMLElement): HTMLElement {
         const avatarElement = document.createElement('i');
         avatarElement.className = "nes-" + avatar;
         avatarElement.style.fontSize = "3em";
-        avatarElement.style.cursor = "pointer";
         avatarElement.style.margin = "0.3em";
         avatarElement.addEventListener('click', () => {
             currentStoryPart = storyPart.choices ? storyPart.choices[avatars.indexOf(avatar)].next : "symptoms";
@@ -255,7 +338,7 @@ function summariseCollectedData(variables: IVariable[], userCollectedData: IUser
     const th1 = document.createElement('th');
     th1.innerText = "Variable";
     const th2 = document.createElement('th');
-    th2.innerText = "Value";
+    th2.innerText = "Measured";
     tr.appendChild(th1);
     tr.appendChild(th2);
     thead.appendChild(tr);
@@ -289,7 +372,82 @@ function summariseCollectedData(variables: IVariable[], userCollectedData: IUser
     return table;
 }
 
-function createModalElement(variables: IVariable[], storyPart: IStoryPart, button: HTMLElement): HTMLElement {
+async function fetchMissingnessStructure(): Promise<IMissingDataPattern> {
+    const response = await fetch('data/missing_data_structure.json');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return await response.json();
+}
+
+function visualiseMissignessTable(missingnessPatterns : IMissingDataPattern, variables: IVariable[], userCollectedData: IUserCollectedData): HTMLElement {
+
+    // create a bulma table with elements coloured blue and red based on "Yes"/"No" from the json
+    const table = document.createElement('table');
+    table.className = "table is-bordered is-narrow is-small";
+    table.style.tableLayout = "fixed"; 
+
+    const tfoot = document.createElement('tfoot');
+    const tr = document.createElement('tr');
+    
+    const names = missingnessPatterns.item_names;
+    names.forEach((name: string) => {
+        const th = document.createElement('th');
+        th.innerText = name;
+        th.className = "is-size-7";
+        th.style.width = "1%";  
+        tr.appendChild(th);
+    });
+    tfoot.appendChild(tr);
+    table.appendChild(tfoot);
+
+    const tbody = document.createElement('tbody');
+
+    const collected_comparison : boolean [] = [];
+    variables.forEach((x: IVariable) => {
+        if (x.display) {
+            if (userCollectedData[x.id] === undefined) {
+                userCollectedData[x.id] = false;
+            }
+            collected_comparison.push(userCollectedData[x.id]);
+        }
+    });
+
+    missingnessPatterns.item_values.forEach((row: string[]) => {
+        const tr = document.createElement('tr');
+
+        const comparison : boolean [] = [];
+        
+        row.forEach((value: string) => {
+            const td = document.createElement('td');
+            td.style.border = "black solid 1px";
+            td.style.height = "1em";
+            if (value == "Yes") {
+                // change background colour
+                td.style.backgroundColor = "#3896c4";
+                comparison.push(true);
+            } else if (value == "No") {
+                // change background colour
+                td.style.backgroundColor = "#ed444a";
+                comparison.push(false);
+            }
+            tr.appendChild(td);
+        });
+
+        if (JSON.stringify(comparison) == JSON.stringify(collected_comparison)) {
+            tr.style.border = "black solid 5px";
+        }
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+
+    return table;
+
+}
+
+function createModalElement(missingnessPatterns : IMissingDataPattern, variables: IVariable[], storyPart: IStoryPart, button: HTMLElement): HTMLElement {
     const modal = document.createElement('div');
     modal.className = "modal is-active is-large";
     modal.style.fontFamily = "Helvetica, sans-serif";
@@ -319,6 +477,15 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
 
     if (storyPart.variable && storyPart.variable == "collected_data") {
         const dataTable = summariseCollectedData(variables, userCollectedData);
+        content.appendChild(dataTable);
+    }
+
+    if (storyPart.variable && storyPart.variable == "structured_missingness") {
+        const subheading = document.createElement('h4');
+        subheading.className = "subtitle is-small";
+        subheading.innerText = "Possible patterns of missing data";
+        content.appendChild(subheading);
+        const dataTable = visualiseMissignessTable(missingnessPatterns, variables, userCollectedData);
         content.appendChild(dataTable);
     }
 
@@ -366,7 +533,7 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
             const choiceButton = document.createElement('button');
             choiceButton.innerText = choice.text;
             if (storyPart.style && storyPart.style == "summary") {
-                choiceButton.className = "button is-primary";
+                choiceButton.className = "button is-primary is-large";
             } else {
                 choiceButton.className = "nes-btn is-primary";
             }
@@ -379,7 +546,7 @@ function createModalElement(variables: IVariable[], storyPart: IStoryPart, butto
     } else {
         // restart button
         const restartButton = document.createElement('button');
-        restartButton.className = "button is-danger";
+        restartButton.className = "button is-danger is-large";
         restartButton.type = "button";
         restartButton.innerText = "Restart";
         restartButton.addEventListener('click', () => {
@@ -419,7 +586,6 @@ function createInfoButton(storyPart: IStoryPart): HTMLElement {
     infoButton.style.right = "0";
     infoButton.style.margin = "0.5em";
     infoButton.style.fontSize = "1em";
-    infoButton.style.cursor = "pointer";
     infoButton.addEventListener('click', () => {
         const dialog = document.createElement('dialog');
         dialog.className = "nes-dialog";
@@ -475,6 +641,7 @@ window.onload = async () => {
                 // Fetch the story data, currently from a local JSON file
                 // TODO: from a public GitHub repository
                 const data = await fetchStory();
+                const missingness = await fetchMissingnessStructure();    
 
 
 
@@ -485,7 +652,7 @@ window.onload = async () => {
                 if (currentStoryPart === 'start') {
                     dataElement.innerHTML = ''; // clear previous content 
 
-                    const card = createCardElement(storyPart, stepCounter);
+                    const card = createCardElement(storyPart, stepCounter, button);
                     dataElement.appendChild(card);
 
                     stepCounter++;
@@ -505,11 +672,11 @@ window.onload = async () => {
 
                     if (storyPart.style && storyPart.style == "summary") {
                         // serious style
-                        const modal = createModalElement(data.variables, storyPart, button);
+                        const modal = createModalElement(missingness, data.variables, storyPart, button);
                         dataElement.appendChild(modal);
                     } else {
 
-                        const card = createCardElement(storyPart, stepCounter);
+                        const card = createCardElement(storyPart, stepCounter, button);
                         dataElement.appendChild(card);
 
                         stepCounter++;

@@ -1,0 +1,39 @@
+{ 
+    "item_names" : [
+            "Sitting and standing blood pressure",
+            "Repeated monitoring BP1",
+            "MRI and lab tests",
+            "Organ damage tests",
+            "Eye exam today",
+            "Repeated monitoring BP 2",
+            "ACEi or ARB medication",
+            "CCB medication",
+            "Repeated BP monitoring"
+        ],
+    "item_values" : [ 
+        [ "No","No","Yes","Yes","Yes","No","Yes","No","No" ],
+        [ "No","No","Yes","Yes","Yes","No","No","Yes","No"],
+        [ "No","No","Yes","Yes","No","Yes","No","No","Yes"],
+        [ "No","No","No","No","No","No","Yes","No","No"],
+        [ "No","No","Yes","Yes","No","No","Yes","No","No"],
+        [ "No","No","Yes","Yes","No","No","No","Yes","No"],
+        [ "Yes","No","No","Yes","Yes","No","Yes","No","No"],
+        [ "Yes","No","No","Yes","Yes","No","No","Yes","No"],
+        [ "Yes","No","No","Yes","No","Yes","No","No","Yes"],
+        [ "Yes","No","No","No","No","No","Yes","No","No"],
+        [ "Yes","No","No","Yes","No","No","Yes","No","No"],
+        [ "Yes","No","No","Yes","No","No","No","Yes","No"],
+        [ "No","Yes","Yes","Yes","Yes","No","Yes","No","Yes"],
+        [ "No","Yes","Yes","Yes","Yes","No","No","Yes","Yes"],
+        [ "No","Yes","Yes","Yes","No","Yes","No","No","Yes"],
+        [ "No","Yes","No","No","No","No","Yes","No","Yes"],
+        [ "No","Yes","Yes","Yes","No","No","Yes","No","Yes"],
+        [ "No","Yes","Yes","Yes","No","No","No","Yes","Yes"],
+        [ "Yes","Yes","No","Yes","Yes","No","Yes","No","Yes"],
+        [ "Yes","Yes","No","Yes","Yes","No","No","Yes","Yes"],
+        [ "Yes","Yes","No","Yes","No","Yes","No","No","Yes"],
+        [ "Yes","Yes","No","No","No","No","Yes","No","Yes"],
+        [ "Yes","Yes","No","Yes","No","No","Yes","No","Yes"],
+        [ "Yes","Yes","No","Yes","No","No","No","Yes","Yes"]
+    ]
+}
