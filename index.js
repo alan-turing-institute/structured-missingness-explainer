@@ -183,7 +183,6 @@ function createAvatars(storyPart, button) {
         const avatarElement = document.createElement('i');
         avatarElement.className = "nes-" + avatar;
         avatarElement.style.fontSize = "3em";
-        avatarElement.style.cursor = "pointer";
         avatarElement.style.margin = "0.3em";
         avatarElement.addEventListener('click', () => {
             currentStoryPart = storyPart.choices ? storyPart.choices[avatars.indexOf(avatar)].next : "symptoms";
@@ -341,7 +340,6 @@ function createInfoButton(storyPart) {
     infoButton.style.right = "0";
     infoButton.style.margin = "0.5em";
     infoButton.style.fontSize = "1em";
-    infoButton.style.cursor = "pointer";
     infoButton.addEventListener('click', () => {
         const dialog = document.createElement('dialog');
         dialog.className = "nes-dialog";
